@@ -1,11 +1,12 @@
 {
-    "name": "ghostwriter/wip",
-    "description": "Here be dragons",
+    "name": "ghostwriter/phormat",
+    "description": "PHP code formatter",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "wip"
+        "phormat",
+        "dev"
     ],
     "authors": [
         {
@@ -15,13 +16,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/wip",
+    "homepage": "https://github.com/ghostwriter/phormat",
     "support": {
-        "issues": "https://github.com/ghostwriter/wip/issues",
-        "forum": "https://github.com/ghostwriter/wip/discussions",
-        "source": "https://github.com/ghostwriter/wip",
-        "docs": "https://github.com/ghostwriter/wip",
-        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+        "issues": "https://github.com/ghostwriter/phormat/issues",
+        "forum": "https://github.com/ghostwriter/phormat/discussions",
+        "source": "https://github.com/ghostwriter/phormat",
+        "docs": "https://github.com/ghostwriter/phormat",
+        "rss": "https://github.com/ghostwriter/phormat/releases.atom"
     },
     "funding": [
         {
@@ -31,39 +32,34 @@
     ],
     "require": {
         "php": "^8.3",
-        "ghostwriter/clock": "^2.0",
-        "ghostwriter/collection": "^1.4",
-        "ghostwriter/config": "^0.4",
-        "ghostwriter/container": "^2.0",
-        "ghostwriter/event-dispatcher": "^3.0",
-        "ghostwriter/json": "^2.0",
-        "ghostwriter/option": "^1.5",
-        "ghostwriter/result": "^1.3"
+        "ghostwriter/case-converter": "^1.0",
+        "ghostwriter/container": "^3.0",
+        "ghostwriter/event-dispatcher": "^4.0",
+        "nikic/php-parser": "^5.0",
+        "sebastian/diff": "^6.0"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/psalm-plugin": "^0.2 || ^0.3 || ^1.0"
+        "ghostwriter/testify": "dev-main",
+        "phpbench/phpbench": "^1.0",
+        "phpunit/phpunit": "^11.0",
+        "symfony/var-dumper": "^7.0",
+        "vimeo/psalm": "6.x-dev"
     },
-    "replace": {},
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\Wip\\": "src"
-        },
-        "files": [
-            "src/constants.php",
-            "src/functions.php"
-        ]
+            "Ghostwriter\\Phormat\\": "src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\Wip\\Tests\\": "tests"
+            "Ghostwriter\\PhormatTests\\": "tests"
         }
     },
     "bin": [
-        "bin/console",
-        "bin/console.php"
+        "bin/phormat"
     ],
     "config": {
         "discard-changes": true,
@@ -77,25 +73,26 @@
         "cache:clear": "rm -fr ./.cache",
         "check": [
             "@composer validate",
-            "@cs",
+            "@phormat",
             "@test"
         ],
-        "cs": [
-            "@phpcs",
-            "@phpcbf"
+        "infection": [
+            "@xdebug",
+            "vendor/bin/infection --ansi --verbose"
         ],
-        "infection": ["@xdebug","vendor/bin/infection --ansi --verbose"],
-        "phpcbf": "vendor/bin/phpcbf --colors --no-cache --standard=PSR12 -s ./src",
-        "phpcs": "vendor/bin/phpcs --colors --no-cache --standard=PSR12 -s ./src",
-        "phpunit": ["@xdebug","vendor/bin/phpunit --do-not-cache-result --colors=always --testdox --stop-on-failure"],
+        "phormat": "bin/phormat --fix --dry-run",
+        "phpunit": [
+            "@xdebug",
+            "vendor/bin/phpunit --do-not-cache-result --colors=always --stop-on-failure"
+        ],
         "phpunit:migrate": "vendor/bin/phpunit --migrate-configuration",
         "psalm": "tools/psalm --shepherd --stats --no-diff --no-cache ",
+        "psalm:baseline": "@psalm --set-baseline=psalm-baseline.xml",
+        "psalm:dry-run": "@psalm --alter --issues=all --dry-run",
         "psalm:home": [
             "@psalm:shepherd",
             "@psalm:security"
         ],
-        "psalm:baseline": "@psalm --set-baseline=psalm-baseline.xml",
-        "psalm:dry-run": "@psalm --alter --issues=all --dry-run",
         "psalm:missing-return-types": "@psalm --alter --issues=MissingReturnType",
         "psalm:security": "@psalm --taint-analysis",
         "psalm:shepherd": "@psalm --shepherd --stats --no-diff --no-cache",
