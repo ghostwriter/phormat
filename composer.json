@@ -32,19 +32,14 @@
     ],
     "require": {
         "php": "^8.3",
-        "ghostwriter/case-converter": "^1.0",
-        "ghostwriter/container": "^3.0",
-        "ghostwriter/event-dispatcher": "^4.0",
-        "nikic/php-parser": "^5.0",
-        "sebastian/diff": "^6.0"
+        "ghostwriter/case-converter": "^1.0.0",
+        "ghostwriter/container": "^3.0.2",
+        "ghostwriter/event-dispatcher": "^4.0.0",
+        "nikic/php-parser": ">=4.18.0",
+        "sebastian/diff": ">=5.1.0"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/testify": "dev-main",
-        "phpbench/phpbench": "^1.0",
-        "phpunit/phpunit": "^11.0",
-        "symfony/var-dumper": "^7.0",
-        "vimeo/psalm": "6.x-dev"
+        "ghostwriter/coding-standard": "dev-main"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
