@@ -35,8 +35,8 @@
         "ghostwriter/case-converter": "^1.0.0",
         "ghostwriter/container": "^3.0.2",
         "ghostwriter/event-dispatcher": "^4.0.0",
-        "nikic/php-parser": ">=4.18.0",
-        "sebastian/diff": ">=5.1.0"
+        "nikic/php-parser": "^4.19.1",
+        "sebastian/diff": "^5.1.1"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main"
@@ -61,7 +61,10 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "prepend-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "ghostwriter/coding-standard": true
+        }
     },
     "scripts": {
         "bench": "vendor/bin/phpbench --colors=always",
