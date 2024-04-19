@@ -12,7 +12,6 @@
 /.gitignore export-ignore
 /ecs.php export-ignore
 /infection.json5.dist export-ignore
-/phpbench.json.dist export-ignore
 /phpunit.xml.dist export-ignore
 /psalm-baseline.xml export-ignore
 /psalm.xml.dist export-ignore
