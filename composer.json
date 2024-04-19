@@ -35,8 +35,8 @@
         "ghostwriter/case-converter": "^1.0.0",
         "ghostwriter/container": "^3.0.3",
         "ghostwriter/event-dispatcher": "^4.0.0",
-        "nikic/php-parser": "^4.19.1",
-        "sebastian/diff": "^5.1.1"
+        "nikic/php-parser": "^5.0.2",
+        "sebastian/diff": "^6.0.1"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
@@ -52,7 +52,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\PhormatTests\\": "tests",
             "Tests\\": "tests"
         }
     },
@@ -96,10 +95,10 @@
         "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --do-not-cache-result --colors=always",
         "phpunit:migrate": "@phpunit --migrate-configuration",
         "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --show-info=true",
-        "psalm:alter": "@psalm --no-diff --shepherd --stats --alter --allow-backwards-incompatible-changes=false",
+        "psalm:alter": "@psalm --shepherd --stats --alter --allow-backwards-incompatible-changes=false --safe-types",
         "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
         "psalm:dry-run": "@psalm:alter --issues=all --dry-run",
-        "psalm:fix": "@psalm:alter --issues=MissingReturnType",
+        "psalm:fix": "@psalm:alter --issues=UnnecessaryVarAnnotation,MissingPureAnnotation,MissingImmutableAnnotation",
         "psalm:security": "@psalm --no-diff --taint-analysis",
         "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
         "rector": "vendor/bin/rector process --no-ansi --no-interaction --clear-cache",
