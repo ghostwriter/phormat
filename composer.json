@@ -22,7 +22,8 @@
         "forum": "https://github.com/ghostwriter/phormat/discussions",
         "source": "https://github.com/ghostwriter/phormat",
         "docs": "https://github.com/ghostwriter/phormat",
-        "rss": "https://github.com/ghostwriter/phormat/releases.atom"
+        "rss": "https://github.com/ghostwriter/phormat/releases.atom",
+        "security": "https://github.com/ghostwriter/phormat/security/advisories/new"
     },
     "funding": [
         {
@@ -30,18 +31,17 @@
             "url": "https://github.com/sponsors/ghostwriter"
         }
     ],
+    "_comment": "#BlackLivesMatter",
     "require": {
         "php": ">=8.3",
         "ghostwriter/case-converter": "^1.0.0",
-        "ghostwriter/container": "^3.0.3",
-        "ghostwriter/event-dispatcher": "^4.0.0",
-        "nikic/php-parser": "^5.0.2",
-        "sebastian/diff": "^6.0.1"
+        "ghostwriter/container": "^4.0.1",
+        "ghostwriter/event-dispatcher": "^5.0.1",
+        "nikic/php-parser": "^5.1.0",
+        "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/psalm-plugin": "^1.0 || dev-main as 0.999",
-        "ghostwriter/testify": "^1.0 || dev-main as 0.999"
+        "ghostwriter/coding-standard": "dev-main"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -65,6 +65,9 @@
         "classmap-authoritative": false,
         "discard-changes": true,
         "optimize-autoloader": true,
+        "platform": {
+            "php": "8.3.999"
+        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
@@ -72,36 +75,40 @@
         "use-parent-dir": false
     },
     "scripts": {
+        "bin_ecs": "ecs check --clear-cache --no-interaction",
+        "bin_infection": "infection --ansi --show-mutations --threads=max --min-msi=0 --min-covered-msi=0",
+        "bin_phive": "phive",
+        "bin_phpunit": "phpunit --do-not-cache-result --colors=always",
+        "bin_psalm": "psalm --no-cache",
+        "bin_rector": "rector process --no-ansi --clear-cache",
         "cache:clear": "rm -rf ./.cache/*",
         "check": [
             "@composer validate",
             "@ecs",
             "@test"
         ],
-        "composer-normalize": "vendor/ghostwriter/coding-standard/tools/composer-normalize --no-cache --diff --no-check-lock --no-scripts --no-plugins",
-        "composer-require-checker": "vendor/ghostwriter/coding-standard/tools/composer-require-checker check",
-        "composer-unused": "vendor/ghostwriter/coding-standard/tools/composer-unused",
         "dev": [
             "@cache:clear",
-            "@composer-normalize",
-            "@psalm:baseline",
             "@check",
+            "@psalm:update",
             "@psalm:security",
             "@psalm:dry-run"
         ],
-        "ecs": "vendor/bin/ecs check --clear-cache --fix --no-interaction",
-        "infection": "vendor/ghostwriter/coding-standard/tools/infection --ansi --verbose --threads=max --min-msi=0 --min-covered-msi=0",
+        "ecs": "@bin_ecs --fix",
+        "git:submodule:update": "git submodule update --depth=1 --init --recursive --recommend-shallow --remote",
+        "infection": "@bin_infection",
         "phormat": "bin/phormat --fix --dry-run",
-        "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --do-not-cache-result --colors=always",
-        "phpunit:migrate": "@phpunit --migrate-configuration",
-        "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --show-info=true",
-        "psalm:alter": "@psalm --shepherd --stats --alter --allow-backwards-incompatible-changes=false --safe-types",
+        "phpunit": "@bin_phpunit",
+        "phpunit:migrate": "@bin_phpunit --migrate-configuration",
+        "psalm": "@bin_psalm --show-info=true",
+        "psalm:alter": "@bin_psalm --alter --allow-backwards-incompatible-changes=false --safe-types",
         "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
         "psalm:dry-run": "@psalm:alter --issues=all --dry-run",
         "psalm:fix": "@psalm:alter --issues=UnnecessaryVarAnnotation,MissingPureAnnotation,MissingImmutableAnnotation",
         "psalm:security": "@psalm --no-diff --taint-analysis",
         "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
-        "rector": "vendor/bin/rector process --no-ansi --no-interaction --clear-cache",
+        "psalm:update": "@psalm --no-diff --update-baseline=psalm-baseline.xml",
+        "rector": "@bin_rector",
         "test": [
             "@phpunit",
             "@psalm:shepherd",
