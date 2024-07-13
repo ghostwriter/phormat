@@ -33,10 +33,6 @@ You can also star (🌟) this repo to find it easier later.
 vendor/bin/phormat <path> --dry-run
 ```
 
-```php
-vendor/bin/phormat <path>
-```
-
 ## Configuration
 
 ```php
@@ -44,36 +40,18 @@ vendor/bin/phormat <path>
 
 declare(strict_types=1);
 
-use Ghostwriter\Phormat\NodeVisitor\ChangeToShortArrayNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\MakeClosureAndFunctionStaticNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\DeclareStrictTypesNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\ImportFullyQualifiedNamesNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\SortClassLikeMemberStatementsAlphabeticallyNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\SortClassLikeStatementsAlphabeticallyNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\SortMatchExpressionsAlphabeticallyNodeVisitor;
-use Ghostwriter\Phormat\NodeVisitor\SortUseStatementsAlphabeticallyNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\PERCSNodeVisitor;
 use Ghostwriter\Phormat\PhormatConfig;
 
-$currentWorkingDirectory = getcwd() ?: __DIR__;
+/** @var non-empty-string $workingDirectory */
+$workingDirectory = \getcwd() ?: __DIR__;
 
+/** @psalm-suppress UncaughtThrowInGlobalScope */
 return PhormatConfig::new()
-    ->paths([
-        // $currentWorkingDirectory . '/bin',
-        $currentWorkingDirectory . '/src',
-        $currentWorkingDirectory . '/tests',
-    ])
-    ->exclude([
-        $currentWorkingDirectory . '/vendor',
-    ])
-    ->visitors([
-        // ChangeToShortArrayNodeVisitor::class,
-        // MakeClosureAndFunctionStaticNodeVisitor::class,
-        // DeclareStrictTypesNodeVisitor::class,
-        // ImportFullyQualifiedNamesNodeVisitor::class,
-        // SortClassLikeMemberStatementsAlphabeticallyNodeVisitor::class,
-        // SortClassLikeStatementsAlphabeticallyNodeVisitor::class,
-        // SortMatchExpressionsAlphabeticallyNodeVisitor::class,
-        // SortUseStatementsAlphabeticallyNodeVisitor::class,
+    ->paths($workingDirectory . '/bin', $workingDirectory . '/src', $workingDirectory . '/tests')
+    ->skip($workingDirectory . '/.cache', $workingDirectory . '/docs', $workingDirectory . '/vendor')
+    ->skipVisitors([
+        PERCSNodeVisitor::class => [$workingDirectory . '/tests/Fixture'],
     ]);
 ```
 
