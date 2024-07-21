@@ -31,7 +31,7 @@ use function set_error_handler;
 
         set_error_handler(
             static function (int $severity, string $message, string $file, int $line): void {
-                if (! (error_reporting() & $severity)) {
+                if ((error_reporting() & $severity) === 0) {
                     return;
                 }
 
