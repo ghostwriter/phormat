@@ -35,9 +35,10 @@
     "require": {
         "php": ">=8.3",
         "ghostwriter/case-converter": "^1.0.0",
-        "ghostwriter/container": "^4.0.2",
+        "ghostwriter/container": "^4.0.3",
         "ghostwriter/event-dispatcher": "^5.0.2",
-        "nikic/php-parser": "^5.3.0",
+        "ghostwriter/filesystem": "^0.1.0",
+        "nikic/php-parser": "^5.3.1",
         "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
