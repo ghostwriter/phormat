@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52cb99956dedd04e04e90381697bbbb1",
+    "content-hash": "5b3a3c415b615287eb95b86ad5beb9b4",
     "packages": [
         {
             "name": "ghostwriter/case-converter",
@@ -81,16 +81,16 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "5779b4aecde687c4f44d953d3762ccb776f0ed44"
+                "reference": "a36501ae47e77441504b04500e303d118509f162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/5779b4aecde687c4f44d953d3762ccb776f0ed44",
-                "reference": "5779b4aecde687c4f44d953d3762ccb776f0ed44",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/a36501ae47e77441504b04500e303d118509f162",
+                "reference": "a36501ae47e77441504b04500e303d118509f162",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-13T14:57:49+00:00"
+            "time": "2024-10-09T18:15:29+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
@@ -200,17 +200,77 @@
             "time": "2024-07-15T22:32:15+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v5.3.0",
+            "name": "ghostwriter/filesystem",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a"
+                "url": "https://github.com/ghostwriter/filesystem.git",
+                "reference": "2db142dd3aca57573e5a481bfa5086bbc718847e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
-                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+                "url": "https://api.github.com/repos/ghostwriter/filesystem/zipball/2db142dd3aca57573e5a481bfa5086bbc718847e",
+                "reference": "2db142dd3aca57573e5a481bfa5086bbc718847e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "require-dev": {
+                "ghostwriter/coding-standard": "dev-main"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\Filesystem\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filesystem implementation for PHP",
+            "homepage": "https://github.com/ghostwriter/filesystem",
+            "keywords": [
+                "filesystem",
+                "ghostwriter"
+            ],
+            "support": {
+                "docs": "https://github.com/ghostwriter/filesystem",
+                "forum": "https://github.com/ghostwriter/filesystem/discussions",
+                "issues": "https://github.com/ghostwriter/filesystem/issues",
+                "rss": "https://github.com/ghostwriter/filesystem/releases.atom",
+                "security": "https://github.com/ghostwriter/filesystem/security/advisories/new",
+                "source": "https://github.com/ghostwriter/filesystem"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-08T19:28:13+00:00"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "v5.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
                 "shasum": ""
             },
             "require": {
@@ -253,9 +313,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
             },
-            "time": "2024-09-29T13:56:26+00:00"
+            "time": "2024-10-08T18:51:32+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -404,16 +464,16 @@
         },
         {
             "name": "composer/class-map-generator",
-            "version": "1.3.4",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/class-map-generator.git",
-                "reference": "b1b3fd0b4eaf3ddf3ee230bc340bf3fff454a1a3"
+                "reference": "98bbf6780e56e0fd2404fe4b82eb665a0f93b783"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/b1b3fd0b4eaf3ddf3ee230bc340bf3fff454a1a3",
-                "reference": "b1b3fd0b4eaf3ddf3ee230bc340bf3fff454a1a3",
+                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/98bbf6780e56e0fd2404fe4b82eb665a0f93b783",
+                "reference": "98bbf6780e56e0fd2404fe4b82eb665a0f93b783",
                 "shasum": ""
             },
             "require": {
@@ -426,8 +486,8 @@
                 "phpstan/phpstan-deprecation-rules": "^1",
                 "phpstan/phpstan-phpunit": "^1",
                 "phpstan/phpstan-strict-rules": "^1.1",
-                "symfony/filesystem": "^5.4 || ^6",
-                "symfony/phpunit-bridge": "^5"
+                "phpunit/phpunit": "^8",
+                "symfony/filesystem": "^5.4 || ^6"
             },
             "type": "library",
             "extra": {
@@ -457,7 +517,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/class-map-generator/issues",
-                "source": "https://github.com/composer/class-map-generator/tree/1.3.4"
+                "source": "https://github.com/composer/class-map-generator/tree/1.4.0"
             },
             "funding": [
                 {
@@ -473,25 +533,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-12T14:13:04+00:00"
+            "time": "2024-10-03T18:14:00+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "2.7.9",
+            "version": "2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "e30ccdd665828ae66eb1be78f056e39e1d5f55ab"
+                "reference": "e52b8672276cf436670cdd6bd5de4353740e83b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/e30ccdd665828ae66eb1be78f056e39e1d5f55ab",
-                "reference": "e30ccdd665828ae66eb1be78f056e39e1d5f55ab",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e52b8672276cf436670cdd6bd5de4353740e83b2",
+                "reference": "e52b8672276cf436670cdd6bd5de4353740e83b2",
                 "shasum": ""
             },
             "require": {
                 "composer/ca-bundle": "^1.5",
-                "composer/class-map-generator": "^1.3.3",
+                "composer/class-map-generator": "^1.4.0",
                 "composer/metadata-minifier": "^1.0",
                 "composer/pcre": "^2.2 || ^3.2",
                 "composer/semver": "^3.3",
@@ -531,7 +591,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.7-dev"
+                    "dev-main": "2.8-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -571,7 +631,7 @@
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
                 "security": "https://github.com/composer/composer/security/policy",
-                "source": "https://github.com/composer/composer/tree/2.7.9"
+                "source": "https://github.com/composer/composer/tree/2.8.1"
             },
             "funding": [
                 {
@@ -587,7 +647,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-04T12:43:28+00:00"
+            "time": "2024-10-04T09:31:01+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -970,21 +1030,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "2afba8839059e2b83125118a99c5d6a4a8aeb4f2"
+                "reference": "e8227677bcef7208fe63c278ea4bac8d0e361c19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/2afba8839059e2b83125118a99c5d6a4a8aeb4f2",
-                "reference": "2afba8839059e2b83125118a99c5d6a4a8aeb4f2",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e8227677bcef7208fe63c278ea4bac8d0e361c19",
+                "reference": "e8227677bcef7208fe63c278ea4bac8d0e361c19",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^2.6.0",
                 "composer-runtime-api": "^2.2.2",
-                "composer/composer": "^2.7.9",
+                "composer/composer": "^2.8.1",
                 "mockery/mockery": "^1.6.12",
                 "php": "^8.2",
-                "phpunit/phpunit": "^11.3.6"
+                "phpunit/phpunit": "^11.4.1"
             },
             "conflict": {
                 "vimeo/psalm": "<4.30"
@@ -1041,7 +1101,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-19T11:30:36+00:00"
+            "time": "2024-10-08T17:35:58+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -1422,35 +1482,35 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "11.0.6",
+            "version": "11.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "ebdffc9e09585dafa71b9bffcdb0a229d4704c45"
+                "reference": "f7f08030e8811582cc459871d28d6f5a1a4d35ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ebdffc9e09585dafa71b9bffcdb0a229d4704c45",
-                "reference": "ebdffc9e09585dafa71b9bffcdb0a229d4704c45",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f7f08030e8811582cc459871d28d6f5a1a4d35ca",
+                "reference": "f7f08030e8811582cc459871d28d6f5a1a4d35ca",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^5.1.0",
+                "nikic/php-parser": "^5.3.1",
                 "php": ">=8.2",
-                "phpunit/php-file-iterator": "^5.0.1",
+                "phpunit/php-file-iterator": "^5.1.0",
                 "phpunit/php-text-template": "^4.0.1",
                 "sebastian/code-unit-reverse-lookup": "^4.0.1",
                 "sebastian/complexity": "^4.0.1",
                 "sebastian/environment": "^7.2.0",
                 "sebastian/lines-of-code": "^3.0.1",
-                "sebastian/version": "^5.0.1",
+                "sebastian/version": "^5.0.2",
                 "theseer/tokenizer": "^1.2.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^11.0"
+                "phpunit/phpunit": "^11.4.1"
             },
             "suggest": {
                 "ext-pcov": "PHP extension that provides line coverage",
@@ -1488,7 +1548,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/11.0.6"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/11.0.7"
             },
             "funding": [
                 {
@@ -1496,7 +1556,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-22T04:37:56+00:00"
+            "time": "2024-10-09T06:21:38+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1745,16 +1805,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.3.6",
+            "version": "11.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d62c45a19c665bb872c2a47023a0baf41a98bb2b"
+                "reference": "7875627f15f4da7e7f0823d1f323f7295a77334e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d62c45a19c665bb872c2a47023a0baf41a98bb2b",
-                "reference": "d62c45a19c665bb872c2a47023a0baf41a98bb2b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7875627f15f4da7e7f0823d1f323f7295a77334e",
+                "reference": "7875627f15f4da7e7f0823d1f323f7295a77334e",
                 "shasum": ""
             },
             "require": {
@@ -1793,7 +1853,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "11.3-dev"
+                    "dev-main": "11.4-dev"
                 }
             },
             "autoload": {
@@ -1825,7 +1885,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.3.6"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.4.1"
             },
             "funding": [
                 {
@@ -1841,7 +1901,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-19T10:54:28+00:00"
+            "time": "2024-10-08T15:38:37+00:00"
         },
         {
             "name": "psr/container",
@@ -2823,16 +2883,16 @@
         },
         {
             "name": "sebastian/version",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "45c9debb7d039ce9b97de2f749c2cf5832a06ac4"
+                "reference": "c687e3387b99f5b03b6caa64c74b63e2936ff874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/45c9debb7d039ce9b97de2f749c2cf5832a06ac4",
-                "reference": "45c9debb7d039ce9b97de2f749c2cf5832a06ac4",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/c687e3387b99f5b03b6caa64c74b63e2936ff874",
+                "reference": "c687e3387b99f5b03b6caa64c74b63e2936ff874",
                 "shasum": ""
             },
             "require": {
@@ -2865,7 +2925,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/version/issues",
                 "security": "https://github.com/sebastianbergmann/version/security/policy",
-                "source": "https://github.com/sebastianbergmann/version/tree/5.0.1"
+                "source": "https://github.com/sebastianbergmann/version/tree/5.0.2"
             },
             "funding": [
                 {
@@ -2873,7 +2933,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-03T05:13:08+00:00"
+            "time": "2024-10-09T05:16:32+00:00"
         },
         {
             "name": "seld/jsonlint",
