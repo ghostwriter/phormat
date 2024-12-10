@@ -19,7 +19,6 @@
     "homepage": "https://github.com/ghostwriter/phormat",
     "support": {
         "issues": "https://github.com/ghostwriter/phormat/issues",
-        "forum": "https://github.com/ghostwriter/phormat/discussions",
         "source": "https://github.com/ghostwriter/phormat",
         "docs": "https://github.com/ghostwriter/phormat",
         "rss": "https://github.com/ghostwriter/phormat/releases.atom",
@@ -31,37 +30,48 @@
             "url": "https://github.com/sponsors/ghostwriter"
         }
     ],
-    "_comment": "#BlackLivesMatter",
+    "_comment": [
+        "#BlackLivesMatter",
+        "#FreePalestine",
+        "#StandWithUkraine"
+    ],
     "require": {
         "php": ">=8.3",
         "ghostwriter/case-converter": "^1.0.0",
         "ghostwriter/container": "^4.0.3",
         "ghostwriter/event-dispatcher": "^5.0.2",
-        "ghostwriter/filesystem": "^0.1.0",
+        "ghostwriter/filesystem": "^0.1.1",
         "nikic/php-parser": "^5.3.1",
         "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main"
+        "ghostwriter/coding-standard": "@dev",
+        "ghostwriter/handrail": "@dev",
+        "ghostwriter/psalm-plugin": "@dev",
+        "ghostwriter/testify": "@dev"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\Phormat\\": "src"
+            "Ghostwriter\\Phormat\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests"
-        }
+            "Ghostwriter\\PhormatTests\\Unit\\": "tests/unit/"
+        },
+        "exclude-from-classmap": [
+            "tests/fixture/"
+        ]
     },
     "bin": [
         "bin/phormat"
     ],
     "config": {
         "allow-plugins": {
-            "ghostwriter/coding-standard": true
+            "ghostwriter/coding-standard": true,
+            "ghostwriter/handrail": true
         },
         "classmap-authoritative": false,
         "discard-changes": true,
