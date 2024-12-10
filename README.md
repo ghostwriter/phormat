@@ -35,12 +35,22 @@ vendor/bin/phormat <path> --dry-run
 
 ## Configuration
 
+wip - work in progress
+
 ```php
 <?php
 
 declare(strict_types=1);
 
+use Ghostwriter\Phormat\NodeVisitor\ChangeToShortArrayNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\DeclareStrictTypesNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\ImportFullyQualifiedNamesNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\MakeClosureAndFunctionStaticNodeVisitor;
 use Ghostwriter\Phormat\NodeVisitor\PERCSNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\SortClassLikeMemberStatementsAlphabeticallyNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\SortClassLikeStatementsAlphabeticallyNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\SortMatchExpressionsAlphabeticallyNodeVisitor;
+use Ghostwriter\Phormat\NodeVisitor\SortUseStatementsAlphabeticallyNodeVisitor;
 use Ghostwriter\Phormat\PhormatConfig;
 
 /** @var non-empty-string $workingDirectory */
@@ -48,11 +58,32 @@ $workingDirectory = \getcwd() ?: __DIR__;
 
 /** @psalm-suppress UncaughtThrowInGlobalScope */
 return PhormatConfig::new()
-    ->paths($workingDirectory . '/bin', $workingDirectory . '/src', $workingDirectory . '/tests')
-    ->skip($workingDirectory . '/.cache', $workingDirectory . '/docs', $workingDirectory . '/vendor')
-    ->skipVisitors([
-        PERCSNodeVisitor::class => [$workingDirectory . '/tests/Fixture'],
+    ->visitors([
+        PERCSNodeVisitor::class,
+        // ChangeToShortArrayNodeVisitor::class,
+        // DeclareStrictTypesNodeVisitor::class,
+        // ImportFullyQualifiedNamesNodeVisitor::class,
+        // MakeClosureAndFunctionStaticNodeVisitor::class,
+        // SortClassLikeMemberStatementsAlphabeticallyNodeVisitor::class,
+        // SortClassLikeStatementsAlphabeticallyNodeVisitor::class,
+        // SortMatchExpressionsAlphabeticallyNodeVisitor::class,
+        // SortUseStatementsAlphabeticallyNodeVisitor::class,
     ]);
+    ->paths([
+        $workingDirectory . '/bin',
+        $workingDirectory . '/src', 
+        $workingDirectory . '/tests'
+    ])
+    ->exclude([
+        PERCSNodeVisitor::class => [
+            $workingDirectory . '/resources',
+        ],
+        $workingDirectory . '/.cache',
+        $workingDirectory . '/docs',
+        $workingDirectory . '/tests/fixture'
+        $workingDirectory . '/vendor',
+    ]);
+    ->phpVersion(8, 2); // To use a specific PHP version when parsing the code
 ```
 
 ### Credits
