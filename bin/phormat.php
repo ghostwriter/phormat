@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 declare(strict_types=1);
@@ -11,31 +10,22 @@ use Ghostwriter\Phormat\Phormat;
 use const DIRECTORY_SEPARATOR;
 use const STDERR;
 
-(
-    static function (string $autoloader): void {
-        if (! \file_exists($autoloader)) {
-            $message = '[ERROR]Cannot locate "' . $autoloader . '"\\n please run "composer install"\\n';
+(static function (string $autoloader): void {
+    \set_error_handler(static function (int $severity, string $message, string $file, int $line): never {
+        throw new ErrorException($message, 255, $severity, $file, $line);
+    });
 
-            \fwrite(STDERR, $message);
-
-            exit();
-        }
-
-        require $autoloader;
-
-        \set_error_handler(
-            static function (int $severity, string $message, string $file, int $line): void {
-                if ((\error_reporting() & $severity) === 0) {
-                    return;
-                }
-
-                throw new ErrorException($message, 0, $severity, $file, $line);
-            }
-        );
-
-        /**
-         * #BlackLivesMatter.
-         */
-        Phormat::new()->run();
+    if (! \file_exists($autoloader)) {
+        \fwrite(STDERR, '[ERROR]Cannot locate "' . $autoloader . '"\n please run "composer install"\n');
+        exit;
     }
-)($_composer_autoload_path ?? \dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php');
+
+    require $autoloader;
+
+    /**
+     * #BlackLivesMatter.
+     */
+    Phormat::new()->run();
+
+    \restore_error_handler();
+})($_composer_autoload_path ?? \dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor/autoload.php');
