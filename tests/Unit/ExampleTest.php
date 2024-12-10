@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Ghostwriter\PhormatTests\Unit;
 
 use Ghostwriter\Phormat\Example;
 use PHPUnit\Framework\Attributes\CoversClass;
