@@ -51,7 +51,7 @@ Use git rebase (not git merge) to sync your work from time to time.
 ```bash
 git fetch upstream
 
-git rebase upstream/main
+git rebase upstream/main --autostash
 ```
 
 ### Step 6: Test
