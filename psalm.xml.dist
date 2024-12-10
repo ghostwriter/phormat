@@ -37,7 +37,7 @@
         </ignoreFiles>
     </projectFiles>
     <plugins>
-        <!-- <pluginClass class="Ghostwriter\PsalmPlugin\Plugin"/> -->
+        <pluginClass class="Ghostwriter\PsalmPlugin\Plugin"/>
     </plugins>
     <issueHandlers>
         <MissingOverrideAttribute>
