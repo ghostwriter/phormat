@@ -41,7 +41,7 @@
         "ghostwriter/container": "^4.0.3",
         "ghostwriter/event-dispatcher": "^5.0.2",
         "ghostwriter/filesystem": "^0.1.1",
-        "nikic/php-parser": "^5.3.1",
+        "nikic/php-parser": "^5.4.0",
         "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
