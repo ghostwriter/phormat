@@ -4,8 +4,6 @@
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/phormat?color=8892bf)](https://www.php.net/supported-versions)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/phormat&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 [![Code Coverage](https://codecov.io/gh/ghostwriter/phormat/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/phormat)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/phormat/coverage.svg)](https://shepherd.dev/github/ghostwriter/phormat)
-[![Psalm Level](https://shepherd.dev/github/ghostwriter/phormat/level.svg)](https://psalm.dev/docs/running_psalm/error_levels)
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/phormat)](https://packagist.org/packages/ghostwriter/phormat)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/phormat?color=blue)](https://packagist.org/packages/ghostwriter/phormat)
 
