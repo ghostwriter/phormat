@@ -3,8 +3,6 @@
 [![Automation](https://github.com/ghostwriter/phormat/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/phormat/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/phormat?color=8892bf)](https://www.php.net/supported-versions)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/phormat&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
-[![Code Coverage](https://codecov.io/gh/ghostwriter/phormat/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/phormat)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/phormat)](https://packagist.org/packages/ghostwriter/phormat)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/phormat?color=blue)](https://packagist.org/packages/ghostwriter/phormat)
 
 PHP code formatter.
