@@ -45,10 +45,7 @@
         "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "@dev",
-        "ghostwriter/handrail": "@dev",
-        "ghostwriter/psalm-plugin": "@dev",
-        "ghostwriter/testify": "@dev"
+        "ghostwriter/coding-standard": "@dev"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -76,7 +73,7 @@
         "discard-changes": true,
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.3.999"
+            "php": "8.4.999"
         },
         "preferred-install": "dist",
         "prepend-autoloader": true,
