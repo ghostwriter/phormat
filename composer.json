@@ -45,7 +45,7 @@
         "sebastian/diff": "^6.0.2"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "@dev"
+        "ghostwriter/coding-standard": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
