@@ -10,6 +10,8 @@ use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeVisitorAbstract;
 
+use function usort;
+
 final class SortClassLikeStatementsAlphabeticallyNodeVisitor extends NodeVisitorAbstract
 {
     #[Override]
@@ -19,7 +21,7 @@ final class SortClassLikeStatementsAlphabeticallyNodeVisitor extends NodeVisitor
             return null;
         }
 
-        \usort($node->stmts, static function (Node $a, Node $b): int {
+        usort($node->stmts, static function (Node $a, Node $b): int {
             if (! $a instanceof ClassLike) {
                 return 0;
             }
@@ -30,6 +32,7 @@ final class SortClassLikeStatementsAlphabeticallyNodeVisitor extends NodeVisitor
 
             return $a->name?->toString() <=> $b->name?->toString();
         });
+
         return $node;
 
         // return $this->sort($node);
