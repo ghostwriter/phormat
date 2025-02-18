@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class UseStatementNotFoundException extends RuntimeException
-{
-}
+final class UseStatementNotFoundException extends RuntimeException {}
