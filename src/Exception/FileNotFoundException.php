@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class FileNotFoundException extends RuntimeException
-{
-}
+final class FileNotFoundException extends RuntimeException {}
