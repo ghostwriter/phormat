@@ -11,8 +11,7 @@ final readonly class PERCSPrinter
 {
     public function __construct(
         private Standard $standard
-    ) {
-    }
+    ) {}
 
     public function print(array $nodes): string
     {
