@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use InvalidArgumentException;
 
-final class SkippedPathDoesNotExistException extends InvalidArgumentException
-{
-}
+final class SkippedPathDoesNotExistException extends InvalidArgumentException {}
