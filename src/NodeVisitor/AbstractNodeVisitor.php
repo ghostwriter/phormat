@@ -107,6 +107,8 @@ use PhpParser\NodeVisitor;
 use PhpParser\PrettyPrinter\Standard;
 
 use function strnatcasecmp;
+use function usort;
+use function var_dump;
 
 abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 {
@@ -155,8 +157,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     public function __construct(
         private readonly Standard $standard
-    ) {
-    }
+    ) {}
 
     public function accepts(Node $node): bool
     {
@@ -205,6 +206,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     public function beforeTraverse(array $nodes): ?array
     {
         $this->format(...$nodes);
+
         return $nodes;
     }
 
@@ -212,36 +214,37 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     {
         $left = $this->sort($left);
         $right = $this->sort($right);
+
         return match (true) {
             $left instanceof ElseIf_ => match (true) {
                 $right instanceof ElseIf_ => $this->compareElseIf($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof StaticVar => match (true) {
                 $right instanceof StaticVar => $this->compareStaticVar($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Arg => match (true) {
                 $right instanceof Arg => $this->compareArg($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             //            $left instanceof Expr => match (true) {
-            ////                $right instanceof Expr => $this->compareExpr($left, $right),
+            // //                $right instanceof Expr => $this->compareExpr($left, $right),
             //                default => die(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__)),
             //            },
             $left instanceof Foreach_ => match (true) {
                 $right instanceof Expression, $right instanceof Return_ => 0,
                 $right instanceof Foreach_ => $this->compareForeach($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof TryCatch => match (true) {
                 $right instanceof If_ => 0,
                 $right instanceof TryCatch => $this->compareTryCatch($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof AttributeGroup => match (true) {
                 $right instanceof AttributeGroup => $this->compareAttributeGroup($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof ClassConst => match (true) {
                 $right instanceof ClassConst => $this->compareClassConst($left, $right),
@@ -249,12 +252,12 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
                 $right instanceof Property => self::LEFT_BEFORE_RIGHT,
                 $right instanceof TraitUse => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Nop => 0,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof ClassConstFetch => match (true) {
                 $right instanceof ClassConstFetch => $this->compareClassConstFetch($left, $right),
                 $right instanceof Ternary => 0,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof ClassMethod => match (true) {
                 $right instanceof ClassConst => self::RIGHT_BEFORE_LEFT,
@@ -262,7 +265,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
                 $right instanceof TraitUse => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Property => self::RIGHT_BEFORE_LEFT,
                 $right instanceof ClassMethod => $this->compareClassMethod($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Class_ => match (true) {
                 $right instanceof Class_ => $this->compareClass($left, $right),
@@ -271,12 +274,12 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
                 $right instanceof Trait_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Use_ => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Expression, $right instanceof Function_, $right instanceof If_, $right instanceof Nop => 0,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof EnumCase => match (true) {
                 $right instanceof ClassMethod => self::LEFT_BEFORE_RIGHT,
                 $right instanceof EnumCase => $this->compareEnumCase($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Enum_ => match (true) {
                 $right instanceof Class_ => self::LEFT_BEFORE_RIGHT,
@@ -284,30 +287,30 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
                 $right instanceof Trait_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Interface_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Enum_ => $this->compareEnum($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Expression => match (true) {
                 $right instanceof Continue_, $right instanceof For_, $right instanceof Foreach_, $right instanceof TryCatch, $right instanceof Class_, $right instanceof Trait_, $right instanceof If_, $right instanceof Nop, $right instanceof Return_, $right instanceof Use_ => 0,
                 $right instanceof Expression => $this->compareExpression($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof FuncCall => match (true) {
                 $right instanceof FuncCall => $this->compareFuncCall($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof UseUse => match (true) {
                 $right instanceof UseUse => $this->compareUseUse($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Function_ => match (true) {
                 $right instanceof Class_, $right instanceof If_, $right instanceof Use_ => 0,
                 $right instanceof Function_ => $this->compareFunction($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Identical, $left instanceof String_, $left instanceof Return_, $left instanceof PropertyFetch, $left instanceof Ternary, $left instanceof Param => 0,
             $left instanceof If_ => match (true) {
                 $right instanceof Throw_, $right instanceof Return_, $right instanceof Class_, $right instanceof Expression, $right instanceof Function_, $right instanceof If_, $right instanceof Nop, $right instanceof Use_ => 0,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Interface_ => match (true) {
                 $right instanceof Class_ => self::RIGHT_BEFORE_LEFT,
@@ -315,68 +318,68 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
                 $right instanceof Trait_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Use_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Interface_ => $this->compareInterface($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Static_ => match (true) {
                 $right instanceof If_, $right instanceof Expression => 0,
                 $right instanceof Static_ => $this->compareStatic($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Instanceof_ => match (true) {
                 $right instanceof Identical => 0,
                 $right instanceof Instanceof_ => $this->compareInstanceof($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Alias => match (true) {
                 $right instanceof Alias => $this->compareTraitUseAdaptationAlias($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof MatchArm => match (true) {
                 $right instanceof MatchArm => $this->compareMatchArm($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Name => match (true) {
                 $right instanceof Name => $this->compareName($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof GroupUse => match (true) {
                 $right instanceof GroupUse => $this->compareGroupUse($left, $right),
                 $right instanceof Class_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Use_ => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Enum_ => self::LEFT_BEFORE_RIGHT,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Property => match (true) {
                 $right instanceof ClassConst => self::RIGHT_BEFORE_LEFT,
                 $right instanceof ClassMethod => self::LEFT_BEFORE_RIGHT,
                 $right instanceof TraitUse => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Property => $this->compareProperty($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof TraitUse => match (true) {
                 $right instanceof ClassConst, $right instanceof ClassMethod, $right instanceof Property => self::LEFT_BEFORE_RIGHT,
                 $right instanceof TraitUse => $this->compareTraitUse($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Trait_ => match (true) {
                 $right instanceof Use_ => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Class_ => self::RIGHT_BEFORE_LEFT,
                 $right instanceof Enum_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Trait_ => $this->compareTrait($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Use_ => match (true) {
                 $right instanceof GroupUse => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Class_, $right instanceof Enum_, $right instanceof Interface_, $right instanceof Trait_ => self::LEFT_BEFORE_RIGHT,
                 $right instanceof Expression, $right instanceof Function_, $right instanceof If_, $right instanceof Nop => 0,
                 $right instanceof Use_ => $this->compareUse($left, $right),
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
             $left instanceof Nop => match (true) {
                 $right instanceof ClassConst, $right instanceof Expression, $right instanceof Class_, $right instanceof If_, $right instanceof Use_ => 0,
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             },
-            default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+            default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
         };
     }
 
@@ -404,8 +407,9 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     final public function compareClassLike(ClassLike $left, ClassLike $right): int
     {
         return $this->compareName($left, $right);
+
         //        $this->sort($left);
-        return \strnatcasecmp($this->getName($left), $this->getName($right));
+        return strnatcasecmp($this->getName($left), $this->getName($right));
     }
 
     final public function compareClassMethod(ClassMethod $left, ClassMethod $right): int
@@ -421,6 +425,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     final public function compareEnumCase(EnumCase $left, EnumCase $right): int
     {
         return $this->getName($left) <=> $this->getName($right);
+
         //        die(var_dump([[
         //            $this->getName($left) => $this->getName($right),
         //        ], strnatcasecmp($this->getName($left), $this->getName($right)), $this->getName($left) <=> $this->getName(
@@ -431,7 +436,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function compareExpr(Expr $left, Expr $right): int
     {
-        return \strnatcasecmp(
+        return strnatcasecmp(
             (string) $this->standard->prettyPrintExpr($left),
             (string) $this->standard->prettyPrintExpr($right)
         );
@@ -461,7 +466,8 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     final public function compareGroupUse(GroupUse $left, GroupUse $right): int
     {
         return $this->compareNode($left, $right);
-        return \strnatcasecmp(
+
+        return strnatcasecmp(
             (string) $this->standard->prettyPrint([$this->sortGroupUse($left)]),
             (string) $this->standard->prettyPrint([$this->sortGroupUse($right)])
         );
@@ -496,12 +502,12 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function compareName(Node $left, Node $right): int
     {
-        return \strnatcasecmp($this->getName($left), $this->getName($right));
+        return strnatcasecmp($this->getName($left), $this->getName($right));
     }
 
     final public function compareNode(Node $left, Node $right): int
     {
-        return \strnatcasecmp(
+        return strnatcasecmp(
             (string) $this->standard->prettyPrint([$left]),
             (string) $this->standard->prettyPrint([$right])
         );
@@ -535,26 +541,27 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     final public function compareUse(Use_ $left, Use_ $right): int
     {
         return match ($left->type) {
-            default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+            default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
             Use_::TYPE_CONSTANT => match ($right->type) {
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
                 Use_::TYPE_CONSTANT => $this->compareNode($left, $right),
                 Use_::TYPE_FUNCTION => self::LEFT_BEFORE_RIGHT,
                 Use_::TYPE_NORMAL => self::RIGHT_BEFORE_LEFT,
             },
             Use_::TYPE_FUNCTION => match ($right->type) {
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
                 Use_::TYPE_CONSTANT => self::RIGHT_BEFORE_LEFT,
                 Use_::TYPE_NORMAL => self::RIGHT_BEFORE_LEFT,
                 Use_::TYPE_FUNCTION => $this->compareNode($left, $right),
             },
             Use_::TYPE_NORMAL => match ($right->type) {
-                default => die(\var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
+                default => exit(var_dump([$left::class, $right::class, __LINE__, __FUNCTION__])),
                 Use_::TYPE_CONSTANT => self::LEFT_BEFORE_RIGHT,
                 Use_::TYPE_FUNCTION => self::LEFT_BEFORE_RIGHT,
                 Use_::TYPE_NORMAL => $this->compareNode($left, $right),
             },
         };
+
         return $this->compareNode($this->sort($left), $this->sort($right));
     }
 
@@ -588,6 +595,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
         }
 
         $this->format($node);
+
         return $node;
     }
 
@@ -605,7 +613,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
             $node instanceof Property => $node->props[0]->name->toString(),
             $node instanceof TraitUse => $node->traits[0]->toString(),
             $node instanceof UseUse => $node->name->toString(),
-            default => die(\var_dump([__LINE__, __FUNCTION__, $node::class])),
+            default => exit(var_dump([__LINE__, __FUNCTION__, $node::class])),
         };
     }
 
@@ -660,6 +668,7 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
     final public function removeNode(Node $node): Node
     {
         $node->setAttribute('phormat.remove', true);
+
         return $node;
     }
 
@@ -772,22 +781,25 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortAttributeGroup(AttributeGroup $attributeGroup): AttributeGroup
     {
-        \usort($attributeGroup->attrs, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($attributeGroup->attrs, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $attributeGroup;
     }
 
     final public function sortClass(Class_ $class): Class_
     {
-        \usort($class->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($class->implements, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($class->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($class->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($class->implements, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($class->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $class;
     }
 
     public function sortClassConst(ClassConst $classConst): ClassConst
     {
-        \usort($classConst->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($classConst->consts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classConst->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classConst->consts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $classConst;
     }
 
@@ -798,29 +810,33 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortClassLike(ClassLike $classLike): ClassLike
     {
-        \usort($classLike->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($classLike->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classLike->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classLike->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $classLike;
     }
 
     final public function sortClassMethod(ClassMethod $classMethod): ClassMethod
     {
-        \usort($classMethod->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($classMethod->params, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classMethod->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($classMethod->params, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $classMethod;
     }
 
     final public function sortEnum(Enum_ $enum): Enum_
     {
-        \usort($enum->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($enum->implements, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($enum->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($enum->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($enum->implements, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($enum->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $enum;
     }
 
     final public function sortEnumCase(EnumCase $enumCase): EnumCase
     {
-        \usort($enumCase->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($enumCase->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $enumCase;
     }
 
@@ -831,27 +847,31 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortForeach(Foreach_ $foreach): Foreach_
     {
-        \usort($foreach->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($foreach->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $foreach;
     }
 
     final public function sortFuncCall(FuncCall $funcCall): FuncCall
     {
-        \usort($funcCall->args, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($funcCall->args, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $funcCall;
     }
 
     final public function sortFunction(Function_ $function): Function_
     {
-        \usort($function->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($function->params, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($function->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($function->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($function->params, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($function->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $function;
     }
 
     final public function sortGroupUse(GroupUse $groupUse): GroupUse
     {
-        \usort($groupUse->uses, fn (UseUse $left, UseUse $right): int => $this->compare($left, $right));
+        usort($groupUse->uses, fn (UseUse $left, UseUse $right): int => $this->compare($left, $right));
+
         return $groupUse;
     }
 
@@ -862,8 +882,9 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortIf(If_ $if): If_
     {
-        \usort($if->elseifs, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($if->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($if->elseifs, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($if->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $if;
     }
 
@@ -874,30 +895,34 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortInterface(Interface_ $interface): Interface_
     {
-        \usort($interface->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($interface->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($interface->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($interface->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $interface;
     }
 
     final public function sortMatch(Match_ $match): Match_
     {
-        \usort($match->arms, fn (MatchArm $left, MatchArm $right): int => $this->compare($left, $right));
+        usort($match->arms, fn (MatchArm $left, MatchArm $right): int => $this->compare($left, $right));
+
         return $match;
     }
 
     final public function sortMatchArm(MatchArm $matchArm): MatchArm
     {
-        if ($matchArm->conds === null) {
+        if (null === $matchArm->conds) {
             return $matchArm;
         }
 
-        \usort($matchArm->conds, fn (Expr $left, Expr $right): int => $this->compare($left, $right));
+        usort($matchArm->conds, fn (Expr $left, Expr $right): int => $this->compare($left, $right));
+
         return $matchArm;
     }
 
     final public function sortMethodCall(MethodCall $methodCall): MethodCall
     {
-        \usort($methodCall->args, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($methodCall->args, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $methodCall;
     }
 
@@ -908,7 +933,8 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortNamespace(Namespace_ $namespace): Namespace_
     {
-        \usort($namespace->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($namespace->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $namespace;
     }
 
@@ -919,14 +945,16 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortParam(Param $param): Param
     {
-        \usort($param->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($param->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $param;
     }
 
     final public function sortProperty(Property $property): Property
     {
-        \usort($property->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($property->props, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($property->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($property->props, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $property;
     }
 
@@ -942,7 +970,8 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortStatic(Static_ $static): Static_
     {
-        \usort($static->vars, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($static->vars, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $static;
     }
 
@@ -958,28 +987,32 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     final public function sortTrait(Trait_ $trait): Trait_
     {
-        \usort($trait->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($trait->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($trait->attrGroups, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($trait->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $trait;
     }
 
     final public function sortTraitUse(TraitUse $traitUse): TraitUse
     {
-        \usort($traitUse->adaptations, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($traitUse->traits, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($traitUse->adaptations, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($traitUse->traits, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $traitUse;
     }
 
     final public function sortTryCatch(TryCatch $tryCatch): TryCatch
     {
-        \usort($tryCatch->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
-        \usort($tryCatch->catches, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($tryCatch->stmts, fn (Node $left, Node $right): int => $this->compare($left, $right));
+        usort($tryCatch->catches, fn (Node $left, Node $right): int => $this->compare($left, $right));
+
         return $tryCatch;
     }
 
     final public function sortUse(Use_ $use): Use_
     {
-        \usort($use->uses, fn (UseUse $left, UseUse $right): int => $this->compare($left, $right));
+        usort($use->uses, fn (UseUse $left, UseUse $right): int => $this->compare($left, $right));
+
         return $use;
     }
 
@@ -1225,7 +1258,8 @@ abstract class AbstractNodeVisitor implements FormatterInterface, NodeVisitor
 
     private function sortExpr(Expr $expr): Expr
     {
-        die(\var_dump([$expr::class]));
+        exit(var_dump([$expr::class]));
+
         return $expr;
     }
 
