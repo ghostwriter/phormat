@@ -7,12 +7,11 @@ namespace Ghostwriter\Phormat\Value;
 final readonly class FormatPhpFiles
 {
     /**
-     * @param array<PhpFile> $phpFiles
+     * @param list<PhpFile> $phpFiles
      */
     public function __construct(
         private array $phpFiles
-    ) {
-    }
+    ) {}
 
     public static function new(PhpFile ...$phpFile): self
     {
@@ -20,7 +19,7 @@ final readonly class FormatPhpFiles
     }
 
     /**
-     * @return array<PhpFile>
+     * @return list<PhpFile>
      */
     public function phpFiles(): array
     {
