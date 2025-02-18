@@ -14,14 +14,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use const DIRECTORY_SEPARATOR;
 
+use function dirname;
+use function sprintf;
+use function var_dump;
+
 final readonly class LocatePhormatConfigListener
 {
     public function __construct(
         private SymfonyStyle $symfonyStyle,
         private ContainerInterface $container,
         private FilesystemInterface $filesystem
-    ) {
-    }
+    ) {}
 
     public function __invoke(LocatePhormatConfig $locatePhormatConfig): void
     {
@@ -31,16 +34,17 @@ final readonly class LocatePhormatConfigListener
         $config = require $configPath;
         if (! $config instanceof PhormatConfig) {
             $this->symfonyStyle->error(
-                \sprintf('Config file "%s" must return an instance of %s', $configPath, PhormatConfig::class)
+                sprintf('Config file "%s" must return an instance of %s', $configPath, PhormatConfig::class)
             );
-            throw new InvalidArgumentException(\sprintf(
+
+            throw new InvalidArgumentException(sprintf(
                 'Config file "%s" must return an instance of %s',
                 $configPath,
                 PhormatConfig::class
             ));
         }
 
-        die(\var_dump([$config]));
+        exit(var_dump([$config]));
         $this->container->set(PhormatConfig::class, $config);
     }
 
@@ -52,7 +56,7 @@ final readonly class LocatePhormatConfigListener
             if ($this->filesystem->missing($configPath)) {
                 $this->filesystem->write(
                     $configPath,
-                    $this->filesystem->read(\dirname(__DIR__) . DIRECTORY_SEPARATOR . 'phormat.dist.php')
+                    $this->filesystem->read(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'phormat.dist.php')
                 );
             }
         }
