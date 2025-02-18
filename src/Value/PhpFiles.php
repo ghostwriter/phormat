@@ -12,6 +12,9 @@ use Override;
 use RuntimeException;
 use WeakMap;
 
+use function iterator_to_array;
+use function sprintf;
+
 /** @implements IteratorAggregate<PhpFile> */
 final class PhpFiles implements Countable, IteratorAggregate
 {
@@ -20,8 +23,7 @@ final class PhpFiles implements Countable, IteratorAggregate
      */
     public function __construct(
         private WeakMap $weakMap
-    ) {
-    }
+    ) {}
 
     public static function new(PhpFile ...$phpFiles): self
     {
@@ -37,6 +39,7 @@ final class PhpFiles implements Countable, IteratorAggregate
     public function add(PhpFile $phpFile): self
     {
         $this->weakMap[$phpFile] = $phpFile->path();
+
         return $this;
     }
 
@@ -81,7 +84,7 @@ final class PhpFiles implements Countable, IteratorAggregate
         foreach ($this->weakMap as $phpFile => $path) {
             $mappedPhpFile = $callback($phpFile);
             if (! $mappedPhpFile instanceof PhpFile) {
-                throw new RuntimeException(\sprintf('Callback must return an instance of %s', PhpFile::class));
+                throw new RuntimeException(sprintf('Callback must return an instance of %s', PhpFile::class));
             }
             $weakMap[$mappedPhpFile] = $path;
         }
@@ -94,6 +97,6 @@ final class PhpFiles implements Countable, IteratorAggregate
      */
     public function toArray(): array
     {
-        return \iterator_to_array($this->weakMap);
+        return iterator_to_array($this->weakMap);
     }
 }
