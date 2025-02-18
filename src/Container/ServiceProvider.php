@@ -64,6 +64,6 @@ final readonly class ServiceProvider implements ServiceProviderInterface
         $container->tag(CloningVisitor::class, [NodeVisitor::class]);
         $container->tag(ParentConnectingVisitor::class, [NodeVisitor::class]);
 
-        //$container->tag(NodeConnectingVisitor::class, [NodeVisitor::class]);
+        // $container->tag(NodeConnectingVisitor::class, [NodeVisitor::class]);
     }
 }
