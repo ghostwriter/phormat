@@ -7,7 +7,7 @@ namespace Ghostwriter\Phormat\NodeVisitor;
 use PhpParser\NodeVisitorAbstract;
 
 final class SortNamespaceAlphabeticallyNodeVisitor extends NodeVisitorAbstract
-    //final class SortNamespaceAlphabeticallyNodeVisitor extends AbstractNodeVisitor implements FormatterInterface
+    // final class SortNamespaceAlphabeticallyNodeVisitor extends AbstractNodeVisitor implements FormatterInterface
 {
     //    public function format(Node $node): null|array|int|Node
     //    {
