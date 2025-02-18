@@ -17,7 +17,13 @@ use PhpParser\Node\Stmt\UseUse;
 use PhpParser\Node\UseItem;
 use PhpParser\NodeVisitorAbstract;
 
+use function array_filter;
 use function array_key_exists;
+use function array_merge;
+use function defined;
+use function function_exists;
+use function mb_trim;
+use function str_contains;
 use function trim;
 
 final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
@@ -31,8 +37,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
 
     public function __construct(
         private readonly UseStatements $useStatements = new UseStatements()
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function afterTraverse(array $nodes): ?array
@@ -53,10 +58,11 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
             }
 
             // Insert use statements at the beginning of the file
-            $node->stmts = \array_merge(
+            $node->stmts = array_merge(
                 $useStatements,
-                \array_filter($node->stmts, static fn ($stmt): bool => ! $stmt instanceof Use_)
+                array_filter($node->stmts, static fn ($stmt): bool => ! $stmt instanceof Use_)
             );
+
             break;
         }
 
@@ -86,7 +92,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
                     //
                     //                        continue;
                     //                    }
-                    $alias = \trim($name->getFirst() . $shortName, '_');
+                    $alias = mb_trim($name->getFirst() . $shortName, '_');
                     //                    $type = $this->useType($fullName);
                     //                    if ($type !== Use_::TYPE_NORMAL) {
                     //                        $this->import($fullName, $shortName, $alias);
@@ -101,7 +107,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
                     //                        continue;
                     //                    }
                     //                    $alias = trim($name->getFirst(). $name->getLast(),'_');
-                    $this->import($fullName, $shortName, $alias, $use->alias !== null);
+                    $this->import($fullName, $shortName, $alias, null !== $use->alias);
                 }
 
                 $use->alias = new Identifier($this->aliases[$type]);
@@ -131,7 +137,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
         //        }
         $nodeFullName = $node->toString();
         $type = $this->useType($nodeFullName);
-        if (\array_key_exists($nodeFullName, $this->importMap)) {
+        if (array_key_exists($nodeFullName, $this->importMap)) {
             $importInfo = $this->importMap[$nodeFullName];
             if ($importInfo->useAlias) {
                 return new Name($importInfo->alias);
@@ -152,7 +158,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
 
     public function imported(string $fullName, string $shortName, string $alias): bool
     {
-        return \array_key_exists(
+        return array_key_exists(
             $fullName,
             $this->importMap
         ) && $this->importMap[$fullName]->alias === $alias && $this->importMap[$fullName]->shortName === $shortName;
@@ -181,8 +187,8 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
     public function useType(string $nodeFullName): int
     {
         return match (true) {
-            \function_exists($nodeFullName) => Use_::TYPE_FUNCTION,
-            \defined($nodeFullName) => Use_::TYPE_CONSTANT,
+            function_exists($nodeFullName) => Use_::TYPE_FUNCTION,
+            defined($nodeFullName) => Use_::TYPE_CONSTANT,
             default => Use_::TYPE_NORMAL,
         };
     }
@@ -191,7 +197,7 @@ final class ImportFullyQualifiedNamesNodeVisitor extends NodeVisitorAbstract
     {
         if ($node->getAttribute('parent') instanceof Param) {
             $type = $node->toString();
-            if (! \str_contains($type, '\\')) {
+            if (! str_contains($type, '\\')) {
                 return $node;
             }
 
