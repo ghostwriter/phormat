@@ -9,17 +9,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use const PHP_VERSION;
 
+use function sprintf;
+
 final readonly class StartApplicationListener
 {
     public function __construct(
         private SymfonyStyle $symfonyStyle
-    ) {
-    }
+    ) {}
 
     public function __invoke(StartApplication $startApplication): void
     {
         $this->symfonyStyle->title(
-            \sprintf(
+            sprintf(
                 '%s <info>(%s)</info> - %s %s',
                 $startApplication->name(),
                 $startApplication->version(),
