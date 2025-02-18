@@ -12,6 +12,8 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\NodeVisitorAbstract;
 
+use function spl_object_hash;
+
 final readonly class NodeTraverserFactory implements FactoryInterface
 {
     #[Override]
@@ -21,7 +23,8 @@ final readonly class NodeTraverserFactory implements FactoryInterface
         $nodeTraverser->addVisitor(new class() extends NodeVisitorAbstract {
             public function enterNode(Node $node): Node
             {
-                $node->setAttribute(self::class, \spl_object_hash($node));
+                $node->setAttribute(self::class, spl_object_hash($node));
+
                 return $node;
             }
         });
@@ -29,6 +32,7 @@ final readonly class NodeTraverserFactory implements FactoryInterface
             public function enterNode(Node $node): Node
             {
                 $node->setAttribute('origNode', clone $node);
+
                 return $node;
             }
         });
@@ -36,6 +40,7 @@ final readonly class NodeTraverserFactory implements FactoryInterface
             'preserveOriginalNames' => true,
             'replaceNodes' => false,
         ]));
+
         return $nodeTraverser;
     }
 }
