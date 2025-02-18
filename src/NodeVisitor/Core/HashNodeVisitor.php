@@ -8,12 +8,15 @@ use Override;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
+use function spl_object_hash;
+
 final class HashNodeVisitor extends NodeVisitorAbstract
 {
     #[Override]
     public function enterNode(Node $node): ?Node
     {
-        $node->setAttribute(self::class, \spl_object_hash($node));
+        $node->setAttribute(self::class, spl_object_hash($node));
+
         return $node;
     }
 }
