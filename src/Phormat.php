@@ -25,6 +25,13 @@ use Throwable;
 use const DIRECTORY_SEPARATOR;
 use const PHP_EOL;
 
+use function array_key_exists;
+use function dirname;
+use function getopt;
+use function ini_set;
+use function sprintf;
+use function str_starts_with;
+
 /** @see PhormatTest */
 final readonly class Phormat implements PhormatInterface
 {
@@ -46,12 +53,11 @@ final readonly class Phormat implements PhormatInterface
         private SymfonyStyle $symfonyStyle,
         private ColorConsoleDiff $colorConsoleDiff,
         private Runner $runner,
-    ) {
-    }
+    ) {}
 
     public static function new(): self
     {
-        \ini_set('memory_limit', '-1');
+        ini_set('memory_limit', '-1');
 
         $container = Container::getInstance();
         if (! $container->has(ServiceProvider::class)) {
@@ -67,9 +73,9 @@ final readonly class Phormat implements PhormatInterface
     public function run(): void
     {
         /** @var array{w?:string,workspace?:string,dry-run?:bool} $options */
-        $options = \getopt('w:', ['workspace:', 'dry-run']);
+        $options = getopt('w:', ['workspace:', 'dry-run']);
 
-        $dryRun = \array_key_exists('dry-run', $options);
+        $dryRun = array_key_exists('dry-run', $options);
 
         $workspace = Workspace::new(
             $options['w'] ?? $options['workspace'] ?? $this->filesystem->currentWorkingDirectory(),
@@ -85,7 +91,7 @@ final readonly class Phormat implements PhormatInterface
 
         foreach ($this->symfonyStyle->progressIterate($config->filesAndDirectories()) as $phpFile) {
             $path = $phpFile->path();
-            if (\str_starts_with($path, $vendorDirectory)) {
+            if (str_starts_with($path, $vendorDirectory)) {
                 // skip vendor directory
                 continue;
             }
@@ -100,6 +106,7 @@ final readonly class Phormat implements PhormatInterface
             $this->symfonyStyle->text($diff);
             if ($dryRun) {
                 $this->symfonyStyle->block($path, 'DRY-RUN', 'fg=black;bg=yellow', ' ', true);
+
                 continue;
             }
 
@@ -119,7 +126,7 @@ final readonly class Phormat implements PhormatInterface
             if ($this->filesystem->missing($configPath)) {
                 $this->filesystem->write(
                     $configPath,
-                    $this->filesystem->read(\dirname(__DIR__) . '/phormat.dist.php'),
+                    $this->filesystem->read(dirname(__DIR__) . '/phormat.dist.php'),
                 );
             }
         }
@@ -127,7 +134,7 @@ final readonly class Phormat implements PhormatInterface
         $config = require $configPath;
 
         if (! $config instanceof PhormatConfig) {
-            throw new InvalidArgumentException(\sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Config file "%s" must return an instance of %s',
                 $configPath,
                 PhormatConfig::class,
@@ -153,7 +160,7 @@ final readonly class Phormat implements PhormatInterface
     private function task(string $title, Closure $task): void
     {
         try {
-            print $title . PHP_EOL;
+            echo $title . PHP_EOL;
             $this->eventDispatcher->dispatch($this->container->call($task));
         } catch (Throwable $throwable) {
             $this->eventDispatcher->dispatch($throwable);
@@ -162,7 +169,7 @@ final readonly class Phormat implements PhormatInterface
 
     private function title(): string
     {
-        return \sprintf(
+        return sprintf(
             'Phormat <info>(%s)</info> - PHP Code Formatter %s',
             $this->version(),
             '<error>#BlackLivesMatter</error>',
