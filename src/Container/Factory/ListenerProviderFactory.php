@@ -28,6 +28,7 @@ final readonly class ListenerProviderFactory implements FactoryInterface
         $listenerProvider = new ListenerProvider($container);
         $listenerProvider->bind(StartApplication::class, StartApplicationListener::class);
         $listenerProvider->bind(LocatePhormatConfig::class, LocatePhormatConfigListener::class);
+
         //        $listenerProvider->bind(FormatPhpFiles::class, FormatPhpFilesListener::class);
         return $listenerProvider;
     }
