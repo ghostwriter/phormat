@@ -8,6 +8,10 @@ use Ghostwriter\Phormat\Exception\FailedToReadFileException;
 use Ghostwriter\Phormat\Exception\FileDoesNotExistException;
 use Ghostwriter\Phormat\Exception\FileIsEmptyException;
 
+use function file_exists;
+use function file_get_contents;
+use function mb_trim;
+
 final readonly class PhpFile
 {
     /**
@@ -21,11 +25,11 @@ final readonly class PhpFile
         private string $path,
         private string $contents
     ) {
-        if (! \file_exists($path)) {
+        if (! file_exists($path)) {
             throw new FileDoesNotExistException($path);
         }
 
-        if (\trim($contents) === '') {
+        if (mb_trim($contents) === '') {
             throw new FileIsEmptyException($path);
         }
     }
@@ -38,8 +42,8 @@ final readonly class PhpFile
     public static function new(string $path): self
     {
         /** @var false|non-empty-string $contents */
-        $contents = \file_get_contents($path);
-        if ($contents === false) {
+        $contents = file_get_contents($path);
+        if (false === $contents) {
             throw new FailedToReadFileException($path);
         }
 
