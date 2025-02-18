@@ -9,8 +9,7 @@ final readonly class BeforeFormat
     public function __construct(
         private string $file,
         private string $contents
-    ) {
-    }
+    ) {}
 
     public function contents(): string
     {
