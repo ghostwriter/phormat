@@ -12,8 +12,10 @@ use PhpParser\Node\Expr\ClosureUse;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeVisitorAbstract;
 
+use function array_key_exists;
+
 final class UseArrowFunctionsNodeVisitor extends NodeVisitorAbstract
-    //final class UseArrowFunctionsNodeVisitor extends AbstractNodeVisitor implements FormatterInterface
+    // final class UseArrowFunctionsNodeVisitor extends AbstractNodeVisitor implements FormatterInterface
 {
     #[Override]
     public function enterNode(Node $node): ?Node
@@ -30,7 +32,7 @@ final class UseArrowFunctionsNodeVisitor extends NodeVisitorAbstract
     private function canBeConvertedToArrowFunction(Closure $closure): bool
     {
         // Check if the closure has a single statement which is a return statement
-        if (! \array_key_exists(0, $closure->stmts) || ! $closure->stmts[0] instanceof Return_) {
+        if (! array_key_exists(0, $closure->stmts) || ! $closure->stmts[0] instanceof Return_) {
             return false;
         }
 
