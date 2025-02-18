@@ -19,11 +19,12 @@ final class MakeClosureAndFunctionStaticNodeVisitor extends AbstractNodeVisitor
             $nodes = [$nodes];
         }
 
-        $predicate = static fn (Node $node): bool => $node instanceof Variable && $node->name === 'this';
+        $predicate = static fn (Node $node): bool => $node instanceof Variable && 'this' === $node->name;
         $firstNodeFinderVisitor = new FirstNodeFinderVisitor($predicate);
         $nodeTraverser = new NodeTraverser();
         $nodeTraverser->addVisitor($firstNodeFinderVisitor);
         $nodeTraverser->traverse($nodes);
+
         return $firstNodeFinderVisitor->getFoundNode() instanceof Node;
     }
 
@@ -55,6 +56,7 @@ final class MakeClosureAndFunctionStaticNodeVisitor extends AbstractNodeVisitor
     private function makeStatic(ArrowFunction|Closure $node): ?Node
     {
         $node->static = true;
+
         return $node;
     }
 }
