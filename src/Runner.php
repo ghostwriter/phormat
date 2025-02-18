@@ -17,6 +17,8 @@ use RuntimeException;
 use SebastianBergmann\Diff\Differ as SebastianBergmannDiffer;
 use Throwable;
 
+use function array_key_exists;
+
 final readonly class Runner
 {
     public function __construct(
@@ -25,8 +27,7 @@ final readonly class Runner
         private Parser $parser,
         private PhpFileFinder $phpFileFinder,
         private Standard $standard
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable
@@ -45,7 +46,7 @@ final readonly class Runner
                 continue;
             }
 
-            if (\array_key_exists(key: $nodeVisitor::class, array: $skippedNodeVisitors) && \array_key_exists(
+            if (array_key_exists(key: $nodeVisitor::class, array: $skippedNodeVisitors) && array_key_exists(
                 key: $path,
                 array: $skippedNodeVisitors[$nodeVisitor::class]
             )) {
@@ -56,7 +57,7 @@ final readonly class Runner
         }
 
         $origStmts = $this->parser->parse($phpFile->contents());
-        if ($origStmts === null) {
+        if (null === $origStmts) {
             throw new RuntimeException('Failed to parse PHP code');
         }
 
@@ -70,11 +71,7 @@ final readonly class Runner
         );
     }
 
-    private function b(string $path): void
-    {
-    }
+    private function b(string $path): void {}
 
-    private function d(string $path): void
-    {
-    }
+    private function d(string $path): void {}
 }
