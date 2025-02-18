@@ -14,8 +14,7 @@ final readonly class Result
         private PhormatConfig $phormatConfig,
         private PhpFile $phpFile,
         private SebastianBergmannDiffer $sebastianBergmannDiffer,
-    ) {
-    }
+    ) {}
 
     public static function new(
         SebastianBergmannDiffer $sebastianBergmannDiffer,
@@ -48,7 +47,7 @@ final readonly class Result
 
     public function hasNotChanged(): bool
     {
-        return $this->content === $this->phpFile->contents();
+        return $this->phpFile->contents() === $this->content;
     }
 
     public function originalContent(): string
@@ -63,7 +62,7 @@ final readonly class Result
 
     public function updated(): bool
     {
-        return $this->content !== $this->phpFile->contents();
+        return $this->phpFile->contents() !== $this->content;
     }
 
     public function updatedContent(): string
