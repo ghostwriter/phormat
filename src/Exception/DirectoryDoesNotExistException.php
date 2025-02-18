@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use InvalidArgumentException;
 
-final class DirectoryDoesNotExistException extends InvalidArgumentException
-{
-}
+final class DirectoryDoesNotExistException extends InvalidArgumentException {}
