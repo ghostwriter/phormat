@@ -15,6 +15,13 @@ use Ghostwriter\Phormat\Exception\WorkspacePathMustBeNonEmptyStringException;
 
 use const DIRECTORY_SEPARATOR;
 
+use function dirname;
+use function implode;
+use function is_dir;
+use function is_file;
+use function mb_trim;
+use function realpath;
+
 final readonly class Workspace
 {
     /**
@@ -23,8 +30,7 @@ final readonly class Workspace
     public function __construct(
         private string $directory,
         private bool $dryRun = false
-    ) {
-    }
+    ) {}
 
     /**
      * @throws WorkspacePathDoesNotExistException
@@ -33,18 +39,18 @@ final readonly class Workspace
      */
     public static function new(string $directory): self
     {
-        if (\trim($directory) === '') {
+        if (mb_trim($directory) === '') {
             throw new WorkspacePathMustBeNonEmptyStringException();
         }
 
         /** @var false|non-empty-string $realpath */
-        $realpath = \realpath($directory);
+        $realpath = realpath($directory);
 
-        if ($realpath === false) {
+        if (false === $realpath) {
             throw new WorkspacePathDoesNotExistException($directory);
         }
 
-        if (! \is_dir($realpath)) {
+        if (! is_dir($realpath)) {
             throw new WorkspacePathMustBeDirectoryException($directory);
         }
 
@@ -69,12 +75,12 @@ final readonly class Workspace
 
                 $filesystem->write(
                     $configPath,
-                    $filesystem->read(\dirname(__DIR__) . DIRECTORY_SEPARATOR . 'phormat.dist.php')
+                    $filesystem->read(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'phormat.dist.php')
                 );
             }
         }
 
-        if (! \is_file($configPath)) {
+        if (! is_file($configPath)) {
             throw new MissingConfigFileException($configPath);
         }
 
@@ -95,7 +101,7 @@ final readonly class Workspace
         /**
          * @var non-empty-string
          */
-        return $this->directory . DIRECTORY_SEPARATOR . \implode(DIRECTORY_SEPARATOR, $names);
+        return $this->directory . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $names);
     }
 
     /**
