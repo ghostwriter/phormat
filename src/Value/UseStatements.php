@@ -6,6 +6,8 @@ namespace Ghostwriter\Phormat\Value;
 
 use Ghostwriter\Phormat\Exception\UseStatementNotFoundException;
 
+use function array_key_exists;
+
 final class UseStatements
 {
     private array $uses = [];
@@ -17,7 +19,7 @@ final class UseStatements
 
     public function has(string $name): bool
     {
-        return \array_key_exists($name, $this->uses);
+        return array_key_exists($name, $this->uses);
     }
 
     public function set(string $name): void
