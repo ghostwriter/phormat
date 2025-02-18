@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class ShouldNotHappenException extends RuntimeException
-{
-}
+final class ShouldNotHappenException extends RuntimeException {}
