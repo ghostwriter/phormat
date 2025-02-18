@@ -12,6 +12,8 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\PrettyPrinter\Standard;
 
+use function usort;
+
 final class SortUseStatementsAlphabeticallyNodeVisitor extends AbstractNodeVisitor implements FormatterInterface
 {
     private const int SAME = 0;
@@ -44,7 +46,7 @@ final class SortUseStatementsAlphabeticallyNodeVisitor extends AbstractNodeVisit
             return null;
         }
 
-        \usort($node->stmts, function (Node $left, Node $right): int {
+        usort($node->stmts, function (Node $left, Node $right): int {
             if (! $left instanceof Use_ || ! $right instanceof Use_) {
                 return self::SAME;
             }
@@ -69,6 +71,7 @@ final class SortUseStatementsAlphabeticallyNodeVisitor extends AbstractNodeVisit
                 },
             };
         });
+
         return $node;
     }
 
