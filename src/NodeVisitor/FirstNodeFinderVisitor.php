@@ -12,17 +12,17 @@ use PhpParser\NodeVisitorAbstract;
 
 final class FirstNodeFinderVisitor extends NodeVisitorAbstract
 {
-    private null|Node $foundNode = null;
+    private ?Node $foundNode = null;
 
     public function __construct(
         private readonly Closure $predicate
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function beforeTraverse(array $nodes): ?array
     {
         $this->foundNode = null;
+
         return null;
     }
 
@@ -34,6 +34,7 @@ final class FirstNodeFinderVisitor extends NodeVisitorAbstract
         }
 
         $this->foundNode = $node;
+
         return NodeTraverser::STOP_TRAVERSAL;
     }
 
