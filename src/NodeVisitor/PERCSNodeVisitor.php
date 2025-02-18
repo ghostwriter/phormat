@@ -7,7 +7,7 @@ namespace Ghostwriter\Phormat\NodeVisitor;
 use Override;
 use PhpParser\Node;
 
-//final class PERCSNodeVisitor extends NodeVisitorAbstract
+// final class PERCSNodeVisitor extends NodeVisitorAbstract
 final class PERCSNodeVisitor extends AbstractNodeVisitor
 {
     #[Override]
