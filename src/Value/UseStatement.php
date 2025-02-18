@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Phormat\Value;
 
+use function array_key_first;
+use function array_key_last;
+use function explode;
+
 final readonly class UseStatement
 {
     private string $alias;
@@ -13,9 +17,9 @@ final readonly class UseStatement
     public function __construct(
         private string $full
     ) {
-        $parts = \explode('\\', $full);
-        $first = $parts[\array_key_first($parts)];
-        $last = $parts[\array_key_last($parts)];
+        $parts = explode('\\', $full);
+        $first = $parts[array_key_first($parts)];
+        $last = $parts[array_key_last($parts)];
         $this->alias = $first === $last ? $last : $first . $last;
         $this->name = $last;
     }
