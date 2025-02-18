@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\PhormatTests\Unit;
+namespace Tests\Unit;
 
 use Ghostwriter\Phormat\ColorConsoleDiff;
 use Ghostwriter\Phormat\Container\Extension\ListenerProviderExtension;
