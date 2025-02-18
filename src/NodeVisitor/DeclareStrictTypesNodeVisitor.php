@@ -11,6 +11,8 @@ use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\DeclareDeclare;
 use PhpParser\NodeVisitorAbstract;
 
+use function array_unshift;
+
 final class DeclareStrictTypesNodeVisitor extends NodeVisitorAbstract
 {
     public function __construct(
@@ -18,8 +20,7 @@ final class DeclareStrictTypesNodeVisitor extends NodeVisitorAbstract
         private readonly Declare_ $declare = new Declare_([
             new DeclareDeclare(new Identifier('strict_types'), new LNumber(1)),
         ])
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function afterTraverse(array $nodes): ?array
@@ -28,7 +29,8 @@ final class DeclareStrictTypesNodeVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        \array_unshift($nodes, $this->declare);
+        array_unshift($nodes, $this->declare);
+
         return $nodes;
     }
 
@@ -40,10 +42,11 @@ final class DeclareStrictTypesNodeVisitor extends NodeVisitorAbstract
         foreach ($nodes as $node) {
             if ($node instanceof Declare_) {
                 $this->hasDeclareStrictTypes = true;
+
                 return null;
             }
 
-            if (--$i < 0) {
+            if (0 > --$i) {
                 break;
             }
         }
