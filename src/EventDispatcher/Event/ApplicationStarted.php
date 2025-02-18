@@ -8,8 +8,7 @@ final readonly class ApplicationStarted
 {
     public function __construct(
         private string $directory,
-    ) {
-    }
+    ) {}
 
     public function directory(): string
     {
