@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat;
 
 use InvalidArgumentException;
 
-final class VisitorMustImplementNodeVisitorInterface extends InvalidArgumentException
-{
-}
+final class VisitorMustImplementNodeVisitorInterface extends InvalidArgumentException {}
