@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class WorkspaceArgumentDoesNotExistException extends RuntimeException
-{
-}
+final class WorkspaceArgumentDoesNotExistException extends RuntimeException {}
