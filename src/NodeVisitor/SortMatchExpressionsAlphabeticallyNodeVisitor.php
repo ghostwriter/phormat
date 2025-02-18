@@ -11,10 +11,7 @@ use PhpParser\Node\Expr\Match_;
 final class SortMatchExpressionsAlphabeticallyNodeVisitor extends AbstractNodeVisitor
 {
     #[Override]
-    public function format(Node ...$node): void
-    {
-
-    }
+    public function format(Node ...$node): void {}
 
     //    public function format(Node $node): null|array|int|Node
     //    {
