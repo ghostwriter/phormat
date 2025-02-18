@@ -14,8 +14,7 @@ final readonly class StartApplication
         private string $version,
         private Workspace $workspace,
         private bool $dryRun = false
-    ) {
-    }
+    ) {}
 
     public static function new(
         string $name,
