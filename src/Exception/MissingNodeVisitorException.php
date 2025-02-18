@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use InvalidArgumentException;
 
-final class MissingNodeVisitorException extends InvalidArgumentException
-{
-}
+final class MissingNodeVisitorException extends InvalidArgumentException {}
