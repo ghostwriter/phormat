@@ -8,19 +8,23 @@ use InvalidArgumentException;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
+use function file_exists;
+use function sprintf;
+
 final class FileNodeVisitor extends NodeVisitorAbstract
 {
     public function __construct(
         private readonly string $path
     ) {
-        if (! \file_exists($path)) {
-            throw new InvalidArgumentException(\sprintf('File "%s" does not exist', $path));
+        if (! file_exists($path)) {
+            throw new InvalidArgumentException(sprintf('File "%s" does not exist', $path));
         }
     }
 
     public function enterNode(Node $node): Node
     {
         $node->setAttribute(self::class, $this->path);
+
         return $node;
     }
 }
