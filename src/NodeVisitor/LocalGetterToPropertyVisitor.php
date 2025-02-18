@@ -12,6 +12,8 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
+use function count;
+
 final class LocalGetterToPropertyVisitor extends NodeVisitorAbstract
 {
     /** @var array<string,string> */
@@ -43,14 +45,14 @@ final class LocalGetterToPropertyVisitor extends NodeVisitorAbstract
 
     private function identifyGetterMethods(ClassMethod $classMethod): void
     {
-        if (! $classMethod->isPublic() || \count($classMethod->params) > 0 || $classMethod->getStmts() === null) {
+        if (! $classMethod->isPublic() || count($classMethod->params) > 0 || $classMethod->getStmts() === null) {
             return;
         }
 
         $stmts = $classMethod->getStmts();
-        if (\count($stmts) === 1 && $stmts[0] instanceof Return_) {
+        if (count($stmts) === 1 && $stmts[0] instanceof Return_) {
             $returnExpr = $stmts[0]->expr;
-            if ($returnExpr instanceof PropertyFetch && $returnExpr->var instanceof Variable && $returnExpr->var->name === 'this') {
+            if ($returnExpr instanceof PropertyFetch && $returnExpr->var instanceof Variable && 'this' === $returnExpr->var->name) {
                 $this->gettersToProperties[$classMethod->name->toString()] = $returnExpr->name->toString();
             }
         }
@@ -58,7 +60,7 @@ final class LocalGetterToPropertyVisitor extends NodeVisitorAbstract
 
     private function replaceGetterWithProperty(PropertyFetch $propertyFetch): ?Node
     {
-        if ($propertyFetch->var instanceof Variable && $propertyFetch->var->name === 'this') {
+        if ($propertyFetch->var instanceof Variable && 'this' === $propertyFetch->var->name) {
             $methodName = $propertyFetch->name->toString();
             if (isset($this->gettersToProperties[$methodName])) {
                 return new PropertyFetch(new Variable('this'), $this->gettersToProperties[$methodName]);
