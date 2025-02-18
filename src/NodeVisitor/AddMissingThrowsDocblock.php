@@ -12,15 +12,20 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitorAbstract;
 
+use function implode;
+use function mb_rtrim;
+use function sprintf;
+
 final class AddMissingThrowsDocblock extends NodeVisitorAbstract
 {
-    /** @var array<string,array<string>> */
+    /** @var array<string,list<string>> */
     private array $throwsByFunction = [];
 
     #[Override]
     public function beforeTraverse(array $nodes): ?array
     {
         $this->throwsByFunction = [];
+
         return null;
     }
 
@@ -70,7 +75,7 @@ final class AddMissingThrowsDocblock extends NodeVisitorAbstract
 
     private function createDocComment(array $throwsDoc): string
     {
-        return "/**\n" . \implode("\n", $throwsDoc) . "\n*/";
+        return "/**\n" . implode("\n", $throwsDoc) . "\n*/";
     }
 
     private function getFunctionName(Node $node): string
@@ -79,7 +84,7 @@ final class AddMissingThrowsDocblock extends NodeVisitorAbstract
             $className = $node->getAttribute('parent')
                 ->namespacedName->toString();
 
-            return \sprintf('%s::%s', $className, $node->name->toString());
+            return sprintf('%s::%s', $className, $node->name->toString());
         }
 
         if ($node instanceof Function_) {
@@ -91,6 +96,6 @@ final class AddMissingThrowsDocblock extends NodeVisitorAbstract
 
     private function updateDocComment(string $existingDocComment, array $throwsDoc): string
     {
-        return \rtrim($existingDocComment, '*/') . "\n" . \implode("\n", $throwsDoc) . "\n*/";
+        return mb_rtrim($existingDocComment, '*/') . "\n" . implode("\n", $throwsDoc) . "\n*/";
     }
 }
