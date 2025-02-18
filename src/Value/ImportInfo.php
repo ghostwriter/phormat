@@ -14,6 +14,5 @@ final class ImportInfo
         public string $alias,
         public int $type = Use_::TYPE_UNKNOWN,
         public bool $useAlias = false
-    ) {
-    }
+    ) {}
 }
