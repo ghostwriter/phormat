@@ -10,12 +10,15 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Nop;
 use PhpParser\NodeVisitorAbstract;
 
+use function array_key_last;
+use function dump;
+use function in_array;
+
 final class AddNewlineBetweenNodes extends NodeVisitorAbstract
 {
     public function __construct(
         private readonly Nop $nop = new Nop()
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function leaveNode(Node $node): null|int|Node
@@ -26,11 +29,11 @@ final class AddNewlineBetweenNodes extends NodeVisitorAbstract
 
         $subNodeNames = $node->getSubNodeNames();
 
-        if (! \in_array('stmts', $subNodeNames, true)) {
+        if (! in_array('stmts', $subNodeNames, true)) {
             return null;
         }
 
-        \dump($node::class);
+        dump($node::class);
 
         $node->stmts = $this->ensureNewlineBetweenNodes($node->stmts ?? []);
         //        if (! property_exists($node, 'stmts')) {
@@ -48,7 +51,7 @@ final class AddNewlineBetweenNodes extends NodeVisitorAbstract
 
         /** @var null|array $stmts */
         $stmts = $node->stmts;
-        if ($stmts === null) {
+        if (null === $stmts) {
             return null;
         }
 
@@ -58,15 +61,15 @@ final class AddNewlineBetweenNodes extends NodeVisitorAbstract
     }
 
     /**
-     * @param array<Stmt> $stmts
+     * @param list<Stmt> $stmts
      *
-     * @return array<Stmt>
+     * @return list<Stmt>
      */
     private function ensureNewlineBetweenNodes(array $stmts): array
     {
-        $lastNode = \array_key_last($stmts);
+        $lastNode = array_key_last($stmts);
 
-        /** @var array<Stmt> $newStmts */
+        /** @var list<Stmt> $newStmts */
         $newStmts = [];
 
         foreach ($stmts as $index => $node) {
