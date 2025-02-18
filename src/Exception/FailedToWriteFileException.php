@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class FailedToWriteFileException extends RuntimeException
-{
-}
+final class FailedToWriteFileException extends RuntimeException {}
