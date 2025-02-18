@@ -79,7 +79,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
     }
 
     #[Override]
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
         if ($node instanceof Namespace_) {
             $this->nameContext->startNamespace($node->name);
@@ -92,7 +92,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
                 $this->addAlias($use, $node->type, $node->prefix);
             }
         } elseif ($node instanceof Class_) {
-            if ($node->extends !== null) {
+            if (null !== $node->extends) {
                 $node->extends = $this->resolveClassName($node->extends);
             }
 
@@ -101,7 +101,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             }
 
             $this->resolveAttrGroups($node);
-            if ($node->name !== null) {
+            if (null !== $node->name) {
                 $this->addNamespacedName($node);
             }
         } elseif ($node instanceof Interface_) {
@@ -117,7 +117,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             }
 
             $this->resolveAttrGroups($node);
-            if ($node->name !== null) {
+            if (null !== $node->name) {
                 $this->addNamespacedName($node);
             }
         } elseif ($node instanceof Trait_) {
@@ -131,7 +131,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             $this->resolveSignature($node);
             $this->resolveAttrGroups($node);
         } elseif ($node instanceof Property) {
-            if ($node->type !== null) {
+            if (null !== $node->type) {
                 $node->type = $this->resolveType($node->type);
             }
 
@@ -141,7 +141,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
                 $this->addNamespacedName($const);
             }
         } elseif ($node instanceof ClassConst) {
-            if ($node->type !== null) {
+            if (null !== $node->type) {
                 $node->type = $this->resolveType($node->type);
             }
 
@@ -168,7 +168,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             }
 
             foreach ($node->adaptations as $adaptation) {
-                if ($adaptation->trait !== null) {
+                if (null !== $adaptation->trait) {
                     $adaptation->trait = $this->resolveClassName($adaptation->trait);
                 }
 
@@ -180,7 +180,6 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             }
         }
 
-        return null;
     }
 
     /**
@@ -240,7 +239,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
     {
         if (! $this->replaceNodes) {
             $resolvedName = $this->nameContext->getResolvedName($name, $type);
-            if ($resolvedName !== null) {
+            if (null !== $resolvedName) {
                 $name->setAttribute('resolvedName', $resolvedName);
             } else {
                 $name->setAttribute(
@@ -260,7 +259,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
         }
 
         $resolvedName = $this->nameContext->getResolvedName($name, $type);
-        if ($resolvedName !== null) {
+        if (null !== $resolvedName) {
             return $resolvedName;
         }
 
@@ -270,6 +269,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
             'namespacedName',
             FullyQualified::concat($this->nameContext->getNamespace(), $name, $name->getAttributes())
         );
+
         return $name;
     }
 
@@ -294,6 +294,7 @@ final class NodeNameResolvingVisitor extends NodeVisitorAbstract
 
         if ($node instanceof NullableType) {
             $node->type = $this->resolveType($node->type);
+
             return $node;
         }
 
