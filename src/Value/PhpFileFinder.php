@@ -10,12 +10,14 @@ use InvalidArgumentException;
 use RegexIterator;
 use SplFileInfo;
 
+use function is_dir;
+use function sprintf;
+
 final readonly class PhpFileFinder
 {
     public function __construct(
         private FilesystemInterface $filesystem
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string $directory
@@ -26,8 +28,8 @@ final readonly class PhpFileFinder
      */
     public function find(string $directory): Generator
     {
-        if (! \is_dir($directory)) {
-            throw new InvalidArgumentException(\sprintf('Directory "%s" does not exist', $directory));
+        if (! is_dir($directory)) {
+            throw new InvalidArgumentException(sprintf('Directory "%s" does not exist', $directory));
         }
 
         foreach (new RegexIterator($this->filesystem->recursiveDirectoryIterator(
