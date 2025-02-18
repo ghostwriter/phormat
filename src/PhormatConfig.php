@@ -18,13 +18,26 @@ use Ghostwriter\Phormat\Value\PhpFiles;
 use PhpParser\NodeVisitor;
 use Throwable;
 
+use function array_keys;
+use function class_exists;
+use function debug_backtrace;
+use function file_exists;
+use function get_debug_type;
+use function is_a;
+use function is_dir;
+use function is_file;
+use function is_string;
+use function sprintf;
+use function str_contains;
+use function str_ends_with;
+
 final class PhormatConfig
 {
     /**
+     * @param list<class-string<NodeVisitor>>                                         $nodeVisitors
      * @param array<non-empty-string,PhpFile>                                         $paths
      * @param array<non-empty-string,bool>                                            $skip
      * @param array<class-string<NodeVisitor>,non-empty-array<non-empty-string,bool>> $skipNodeVisitor
-     * @param array<class-string<NodeVisitor>>                              $nodeVisitors
      */
     public function __construct(
         private readonly ContainerInterface $container,
@@ -34,8 +47,7 @@ final class PhormatConfig
         private array $paths = [],
         private array $skip = [],
         private array $skipNodeVisitor = [],
-    ) {
-    }
+    ) {}
 
     //    /** @var array<string,string> */
     //    private array $skip = [
@@ -60,8 +72,8 @@ final class PhormatConfig
     {
         $container = Container::getInstance();
         foreach ($nodeVisitors as $nodeVisitor) {
-            if (! \is_a($nodeVisitor, NodeVisitor::class, true)) {
-                throw new NodeVisitorMustImplementNodeVisitorInterfaceException(\sprintf(
+            if (! is_a($nodeVisitor, NodeVisitor::class, true)) {
+                throw new NodeVisitorMustImplementNodeVisitorInterfaceException(sprintf(
                     'NodeVisitor "%s" MUST implement %s',
                     $nodeVisitor,
                     NodeVisitor::class
@@ -81,7 +93,7 @@ final class PhormatConfig
     {
         $files = [];
         foreach ($this->paths as $path => $phpFile) {
-            if (\is_dir($path)) {
+            if (is_dir($path)) {
                 foreach ($this->phpFileFinder->find($path) as $file) {
                     $files[$file->path()] = $file;
                 }
@@ -92,8 +104,8 @@ final class PhormatConfig
             $files[$path] = $phpFile;
         }
 
-        foreach (\array_keys($this->skip) as $path) {
-            if (\is_dir($path)) {
+        foreach (array_keys($this->skip) as $path) {
+            if (is_dir($path)) {
                 foreach ($this->phpFileFinder->find($path) as $file) {
                     unset($files[$file->path()]);
                 }
@@ -108,7 +120,7 @@ final class PhormatConfig
     }
 
     /**
-     * @return non-empty-array<class-string<NodeVisitor>>
+     * @return non-empty-list<class-string<NodeVisitor>>
      */
     public function nodeVisitors(): array
     {
@@ -121,16 +133,18 @@ final class PhormatConfig
     public function paths(string ...$paths): self
     {
         foreach ($paths as $path) {
-            if (\is_file($path) && \str_ends_with($path, '.php')) {
+            if (is_file($path) && str_ends_with($path, '.php')) {
                 $this->paths[$path] = PhpFile::new($path);
+
                 continue;
             }
 
-            if (! \is_dir($path)) {
+            if (! is_dir($path)) {
                 /** @var array{file:string,line:int} $debug */
-                $debug = \debug_backtrace(0, 1)[0];
+                $debug = debug_backtrace(0, 1)[0];
                 $file = $debug['file'] . ':' . $debug['line'];
-                throw new PathDoesNotExistException(\sprintf(
+
+                throw new PathDoesNotExistException(sprintf(
                     'Path "%s" does not exist; called from "/%s"',
                     $path,
                     $file
@@ -159,7 +173,7 @@ final class PhormatConfig
     public function skip(string ...$paths): self
     {
         foreach ($paths as $path) {
-            $isPath = \is_dir($path) || \is_file($path);
+            $isPath = is_dir($path) || is_file($path);
             if (! $isPath) {
                 throw new SkippedPathDoesNotExistException($path);
             }
@@ -173,7 +187,7 @@ final class PhormatConfig
     /**
      * @template T of NodeVisitor
      *
-     * @param non-empty-array<class-string<T>,non-empty-array<non-empty-string>> $visitors
+     * @param non-empty-array<class-string<T>,non-empty-list<non-empty-string>> $visitors
      *
      * @throws SkippedClassDoesNotExistException
      * @throws SkippedClassMustImplementNodeVisitorInterfaceException
@@ -182,12 +196,12 @@ final class PhormatConfig
     public function skipVisitors(array $visitors): self
     {
         foreach ($visitors as $visitor => $paths) {
-            if (! \class_exists($visitor)) {
+            if (! class_exists($visitor)) {
                 throw new SkippedClassDoesNotExistException($visitor);
             }
 
-            if (! \is_a($visitor, NodeVisitor::class, true)) {
-                throw new SkippedClassMustImplementNodeVisitorInterfaceException(\sprintf(
+            if (! is_a($visitor, NodeVisitor::class, true)) {
+                throw new SkippedClassMustImplementNodeVisitorInterfaceException(sprintf(
                     'Class "%s" MUST implement %s',
                     $visitor,
                     NodeVisitor::class
@@ -195,15 +209,15 @@ final class PhormatConfig
             }
 
             /**
-             * @var non-empty-array<null|non-empty-string>|non-empty-string $paths
+             * @var non-empty-list<null|non-empty-string>|non-empty-string $paths
              */
             foreach ((array) $paths as $path) {
-                if (! \is_string($path)) {
-                    throw new SkippedPathMustBeStringException(\sprintf('Type "%s" given', \get_debug_type($path)));
+                if (! is_string($path)) {
+                    throw new SkippedPathMustBeStringException(sprintf('Type "%s" given', get_debug_type($path)));
                 }
 
-                if (! \str_contains($path, '*') && ! \file_exists($path)) {
-                    throw new SkippedPathDoesNotExistException(\sprintf('Path "%s" does not exist', $path));
+                if (! str_contains($path, '*') && ! file_exists($path)) {
+                    throw new SkippedPathDoesNotExistException(sprintf('Path "%s" does not exist', $path));
                 }
 
                 $this->skipNodeVisitor[$visitor][$path] = true;
@@ -221,13 +235,14 @@ final class PhormatConfig
         /** @var array<class-string<NodeVisitor>,non-empty-array<non-empty-string,bool>> $skipNodeVisitor */
         $skipNodeVisitor = [];
         foreach ($this->skipNodeVisitor as $nodeVisitor => $paths) {
-            foreach (\array_keys($paths) as $path) {
-                if (\is_file($path)) {
+            foreach (array_keys($paths) as $path) {
+                if (is_file($path)) {
                     $skipNodeVisitor[$nodeVisitor][$path] = true;
+
                     continue;
                 }
 
-                if (\is_dir($path)) {
+                if (is_dir($path)) {
                     foreach ($this->phpFileFinder->find($path) as $file) {
                         $skipNodeVisitor[$nodeVisitor][$file->path()] = true;
                     }
@@ -246,8 +261,8 @@ final class PhormatConfig
     public function visitors(string ...$nodeVisitors): self
     {
         foreach ($nodeVisitors as $nodeVisitor) {
-            if (! \is_a($nodeVisitor, NodeVisitor::class, true)) {
-                throw new NodeVisitorMustImplementNodeVisitorInterfaceException(\sprintf(
+            if (! is_a($nodeVisitor, NodeVisitor::class, true)) {
+                throw new NodeVisitorMustImplementNodeVisitorInterfaceException(sprintf(
                     'NodeVisitor "%s" MUST implement %s',
                     $nodeVisitor,
                     NodeVisitor::class
@@ -261,8 +276,8 @@ final class PhormatConfig
     }
 
     /**
-     * @param class-string<NodeVisitor>              $nodeVisitor
-     * @param non-empty-array<null|non-empty-string> $paths
+     * @param class-string<NodeVisitor>             $nodeVisitor
+     * @param non-empty-list<null|non-empty-string> $paths
      *
      * @throws SkippedClassDoesNotExistException
      * @throws SkippedClassMustImplementNodeVisitorInterfaceException
@@ -271,12 +286,12 @@ final class PhormatConfig
     private function skipNodeVisitor(string $nodeVisitor, array $paths): void
     {
         foreach ($this->nodeVisitors as $nodeVisitor) {
-            if (! \class_exists($nodeVisitor)) {
+            if (! class_exists($nodeVisitor)) {
                 throw new SkippedClassDoesNotExistException($nodeVisitor);
             }
 
-            if (! \is_a($nodeVisitor, NodeVisitor::class, true)) {
-                throw new SkippedClassMustImplementNodeVisitorInterfaceException(\sprintf(
+            if (! is_a($nodeVisitor, NodeVisitor::class, true)) {
+                throw new SkippedClassMustImplementNodeVisitorInterfaceException(sprintf(
                     'Class "%s" MUST implement %s',
                     $nodeVisitor,
                     NodeVisitor::class
@@ -284,12 +299,12 @@ final class PhormatConfig
             }
 
             foreach ($paths as $path) {
-                if (! \is_string($path)) {
-                    throw new SkippedPathMustBeStringException(\sprintf('Type "%s" given', \get_debug_type($path)));
+                if (! is_string($path)) {
+                    throw new SkippedPathMustBeStringException(sprintf('Type "%s" given', get_debug_type($path)));
                 }
 
-                if (! \str_contains($path, '*') && ! \file_exists($path)) {
-                    throw new SkippedPathDoesNotExistException(\sprintf('Path "%s" does not exist', $path));
+                if (! str_contains($path, '*') && ! file_exists($path)) {
+                    throw new SkippedPathDoesNotExistException(sprintf('Path "%s" does not exist', $path));
                 }
 
                 // $this->skipNodeVisitor[$visitor][$path] = true;
