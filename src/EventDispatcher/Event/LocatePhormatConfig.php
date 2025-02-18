@@ -10,8 +10,7 @@ final readonly class LocatePhormatConfig
 {
     public function __construct(
         private Workspace $workspace
-    ) {
-    }
+    ) {}
 
     public static function new(Workspace $workspace): self
     {
