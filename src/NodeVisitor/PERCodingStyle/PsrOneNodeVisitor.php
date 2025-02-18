@@ -13,12 +13,13 @@ use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeVisitorAbstract;
 
+use function str_starts_with;
+
 final class PsrOneNodeVisitor extends NodeVisitorAbstract
 {
     public function __construct(
         private readonly CaseConverter $caseConverter
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function leaveNode(Node $node): ?Node
@@ -51,7 +52,7 @@ final class PsrOneNodeVisitor extends NodeVisitorAbstract
 
     private function validateClassName(Class_ $class): Class_
     {
-        if ($class->name === null) {
+        if (null === $class->name) {
             return $class;
         }
 
@@ -70,7 +71,7 @@ final class PsrOneNodeVisitor extends NodeVisitorAbstract
     {
         $methodName = $classMethod->name->toString();
 
-        $isMagicMethod = \str_starts_with($methodName, '__');
+        $isMagicMethod = str_starts_with($methodName, '__');
 
         $camelCase = $this->caseConverter->camelCase($methodName);
 
