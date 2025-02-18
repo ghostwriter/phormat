@@ -9,8 +9,7 @@ final readonly class PhpVersion
     public function __construct(
         private int $major,
         private int $minor
-    ) {
-    }
+    ) {}
 
     public static function new(int $major, int $minor): self
     {
