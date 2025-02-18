@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use InvalidArgumentException;
 
-final class MissingConfigFileException extends InvalidArgumentException
-{
-}
+final class MissingConfigFileException extends InvalidArgumentException {}
