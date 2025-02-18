@@ -6,6 +6,17 @@ namespace Ghostwriter\Phormat;
 
 use const PHP_EOL;
 
+use function array_map;
+use function implode;
+use function mb_rtrim;
+use function mb_strlen;
+use function preg_replace;
+use function preg_split;
+use function sprintf;
+use function str_ends_with;
+use function str_repeat;
+use function str_replace;
+
 /**
  * Inspired by https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/master/src/Differ/DiffConsoleFormatter.php.
  */
@@ -43,7 +54,7 @@ final readonly class ColorConsoleDiff
 
     public function __construct()
     {
-        $this->template = \sprintf('%s%%s%s' . PHP_EOL, PHP_EOL, PHP_EOL);
+        $this->template = sprintf('%s%%s%s' . PHP_EOL, PHP_EOL, PHP_EOL);
     }
 
     public function format(string $diff): string
@@ -53,8 +64,9 @@ final readonly class ColorConsoleDiff
 
     private function formatWithTemplate(string $diff, string $template): string
     {
-        $escapedDiff = self::escape(\rtrim($diff));
-        $escapedDiffLines = \preg_split(self::NEWLINES_REGEX, $escapedDiff);
+        $escapedDiff = self::escape(mb_rtrim($diff));
+        $escapedDiffLines = preg_split(self::NEWLINES_REGEX, $escapedDiff);
+
         // remove description of added + remove; obvious on diffs
         //        foreach ($escapedDiffLines as $key => $escapedDiffLine) {
         //            if ($escapedDiffLine === '--- Original') {
@@ -64,11 +76,11 @@ final readonly class ColorConsoleDiff
         //                unset($escapedDiffLines[$key]);
         //            }
         //        }
-        return \sprintf($template, \implode(PHP_EOL, \array_map(function (string $string): string {
+        return sprintf($template, implode(PHP_EOL, array_map(function (string $string): string {
             $string = $this->makePlusLinesGreen($string);
             $string = $this->makeMinusLinesRed($string);
             $string = $this->makeAtNoteCyan($string);
-            if ($string === ' ') {
+            if (' ' === $string) {
                 return '';
             }
 
@@ -78,17 +90,17 @@ final readonly class ColorConsoleDiff
 
     private function makeAtNoteCyan(string $string): string
     {
-        return \preg_replace(self::AT_START_REGEX, '<fg=cyan>$1</fg=cyan>', $string);
+        return preg_replace(self::AT_START_REGEX, '<fg=cyan>$1</fg=cyan>', $string);
     }
 
     private function makeMinusLinesRed(string $string): string
     {
-        return \preg_replace(self::MINUT_START_REGEX, '<fg=red>$1</fg=red>', $string);
+        return preg_replace(self::MINUT_START_REGEX, '<fg=red>$1</fg=red>', $string);
     }
 
     private function makePlusLinesGreen(string $string): string
     {
-        return \preg_replace(self::PLUS_START_REGEX, '<fg=green>$1</fg=green>', $string);
+        return preg_replace(self::PLUS_START_REGEX, '<fg=green>$1</fg=green>', $string);
     }
 
     /**
@@ -96,7 +108,7 @@ final readonly class ColorConsoleDiff
      */
     public static function escape(string $text): string
     {
-        $text = \preg_replace('/([^\\\\]|^)([<>])/', '$1\\\\$2', $text);
+        $text = preg_replace('/([^\\\\]|^)([<>])/', '$1\\\\$2', $text);
 
         return self::escapeTrailingBackslash($text);
     }
@@ -108,11 +120,11 @@ final readonly class ColorConsoleDiff
      */
     public static function escapeTrailingBackslash(string $text): string
     {
-        if (\str_ends_with($text, '\\')) {
-            $len = \mb_strlen($text);
-            $text = \rtrim($text, '\\');
-            $text = \str_replace("\0", '', $text);
-            $text .= \str_repeat("\0", $len - \mb_strlen($text));
+        if (str_ends_with($text, '\\')) {
+            $len = mb_strlen($text);
+            $text = mb_rtrim($text, '\\');
+            $text = str_replace("\0", '', $text);
+            $text .= str_repeat("\0", $len - mb_strlen($text));
         }
 
         return $text;
