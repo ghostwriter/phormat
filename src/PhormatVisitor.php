@@ -37,9 +37,7 @@ final class PhormatVisitor extends AbstractNodeVisitor
     }
 
     #[Override]
-    public function format(Node ...$node): void
-    {
-    }
+    public function format(Node ...$node): void {}
 
     #[Override]
     public function matches(Node $node): bool
