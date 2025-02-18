@@ -6,6 +6,4 @@ namespace Ghostwriter\Phormat\Exception;
 
 use RuntimeException;
 
-final class WorkspacePathMustBeNonEmptyStringException extends RuntimeException
-{
-}
+final class WorkspacePathMustBeNonEmptyStringException extends RuntimeException {}
