@@ -1,7 +1,7 @@
 {
     "name": "ghostwriter/phormat",
     "description": "PHP code formatter",
-    "license": "BSD-3-Clause",
+    "license": "BSD-4-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
