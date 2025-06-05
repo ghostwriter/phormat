@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe2a58323c59c13b66372256dbb285d9",
+    "content-hash": "11f7139da374e1b041b378c43648f1dc",
     "packages": [
         {
             "name": "ghostwriter/case-converter",
@@ -1030,12 +1030,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "b1eee150012711ccccc13eb0e36e1af0c977ea6b"
+                "reference": "0bccd6020b43b472ea905a8f6bf2eb49a17ef6c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/b1eee150012711ccccc13eb0e36e1af0c977ea6b",
-                "reference": "b1eee150012711ccccc13eb0e36e1af0c977ea6b",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/0bccd6020b43b472ea905a8f6bf2eb49a17ef6c4",
+                "reference": "0bccd6020b43b472ea905a8f6bf2eb49a17ef6c4",
                 "shasum": ""
             },
             "require": {
@@ -1178,7 +1178,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-03T12:51:25+00:00"
+            "time": "2025-06-04T18:18:19+00:00"
         },
         {
             "name": "ghostwriter/json",
@@ -1355,16 +1355,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.4.1",
+            "version": "6.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "35d262c94959571e8736db1e5c9bc36ab94ae900"
+                "reference": "ce1fd2d47799bb60668643bc6220f6278a4c1d02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/35d262c94959571e8736db1e5c9bc36ab94ae900",
-                "reference": "35d262c94959571e8736db1e5c9bc36ab94ae900",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/ce1fd2d47799bb60668643bc6220f6278a4c1d02",
+                "reference": "ce1fd2d47799bb60668643bc6220f6278a4c1d02",
                 "shasum": ""
             },
             "require": {
@@ -1424,9 +1424,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.4.1"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.4.2"
             },
-            "time": "2025-04-04T13:08:07+00:00"
+            "time": "2025-06-03T18:27:04+00:00"
         },
         {
             "name": "marc-mabe/php-enum",
@@ -4494,7 +4494,9 @@
     "platform": {
         "php": "^8.4"
     },
-    "platform-dev": [],
+    "platform-dev": {
+        "ext-xdebug": "*"
+    },
     "platform-overrides": {
         "php": "8.4.999"
     },
