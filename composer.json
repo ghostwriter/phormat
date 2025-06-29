@@ -29,7 +29,12 @@
             "url": "https://github.com/sponsors/ghostwriter"
         }
     ],
-    "_comment": ["#BlackLivesMatter", "#FreePalestine", "#StandWithUkraine", "#StopGenocide"],
+    "_comment": [
+        "#BlackLivesMatter",
+        "#FreePalestine",
+        "#StandWithUkraine",
+        "#StopGenocide"
+    ],
     "require": {
         "php": "^8.4",
         "ghostwriter/case-converter": "~2.0.0 || ~2.1.0",
@@ -44,7 +49,7 @@
         "ghostwriter/coding-standard": "dev-main",
         "infection/infection": "~0.29.14",
         "mockery/mockery": "~1.6.12",
-        "phpunit/phpunit": "~12.2.3",
+        "phpunit/phpunit": "~12.2.5",
         "vimeo/psalm": "~6.12.0"
     },
     "minimum-stability": "stable",
