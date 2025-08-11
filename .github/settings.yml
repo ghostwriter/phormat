@@ -3,7 +3,6 @@
   "description": "[WIP] PHP code formatter"
   "homepage": "https://github.com/ghostwriter/phormat"
   "topics": "coding-standard, dev, ghostwriter, phormat"
-  "private": false
   "has_issues": true
   "has_projects": false
   "has_wiki": false
