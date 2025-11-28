@@ -106,8 +106,8 @@
     },
     "extra": {
         "thanks": {
-            "url": "https://github.com/ghostwriter/phormat",
-            "name": "ghostwriter/phormat"
+            "name": "ghostwriter/phormat",
+            "url": "https://github.com/ghostwriter/phormat"
         }
     }
 }
