@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9f2e563ccad3fd99b056a6443e22c1e",
+    "content-hash": "1c9758157411eaf9bee8eb87f01f330c",
     "packages": [
         {
             "name": "ghostwriter/case-converter",
@@ -91,29 +91,40 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "5.0.1",
+            "version": "6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "e77a71185922b5a67a0219de6acce2d5be8496f2"
+                "reference": "bcfb2a1e2cbff14df8d6f3fb9cc12a4c3bb369d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/e77a71185922b5a67a0219de6acce2d5be8496f2",
-                "reference": "e77a71185922b5a67a0219de6acce2d5be8496f2",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/bcfb2a1e2cbff14df8d6f3fb9cc12a4c3bb369d4",
+                "reference": "bcfb2a1e2cbff14df8d6f3fb9cc12a4c3bb369d4",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.4"
+                "php": "~8.4.0 || ~8.5.0",
+                "psr/container": "^2.0.2"
             },
             "provide": {
                 "psr/container-implementation": "*"
             },
             "require-dev": {
+                "ext-xdebug": "*",
                 "ghostwriter/coding-standard": "dev-main",
-                "psr/container": "^1.1 || ^2.0"
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.4.3",
+                "symfony/var-dumper": "^7.3.5"
             },
             "type": "library",
+            "extra": {
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\Container\\Service\\Definition\\ContainerDefinition"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Ghostwriter\\Container\\": "src/"
@@ -149,30 +160,45 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-18T19:43:29+00:00"
+            "time": "2025-11-18T05:56:22+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
-            "version": "5.0.3",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/event-dispatcher.git",
-                "reference": "71cb9a58f959130dc41573e2f31d84aaf07d4f9d"
+                "reference": "812d1be3c2850d9901a1e471dd2c0e20bbd15b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/event-dispatcher/zipball/71cb9a58f959130dc41573e2f31d84aaf07d4f9d",
-                "reference": "71cb9a58f959130dc41573e2f31d84aaf07d4f9d",
+                "url": "https://api.github.com/repos/ghostwriter/event-dispatcher/zipball/812d1be3c2850d9901a1e471dd2c0e20bbd15b2a",
+                "reference": "812d1be3c2850d9901a1e471dd2c0e20bbd15b2a",
                 "shasum": ""
             },
             "require": {
-                "ghostwriter/container": "^5.0.0",
-                "php": ">=8.4"
+                "ghostwriter/container": "^6.0.1",
+                "php": "~8.4.0 || ~8.5.0",
+                "psr/event-dispatcher": "^1.0.0"
+            },
+            "provide": {
+                "psr/event-dispatcher-implementation": "*"
             },
             "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.4.4",
+                "symfony/var-dumper": "^7.3.5"
             },
             "type": "library",
+            "extra": {
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\EventDispatcher\\Container\\EventDispatcherDefinition"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Ghostwriter\\EventDispatcher\\": "src"
@@ -180,7 +206,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "BSD-4-Clause"
             ],
             "authors": [
                 {
@@ -194,7 +220,10 @@
             "homepage": "https://github.com/ghostwriter/event-dispatcher",
             "keywords": [
                 "event-dispatcher",
-                "ghostwriter"
+                "events",
+                "ghostwriter",
+                "psr",
+                "psr-14"
             ],
             "support": {
                 "issues": "https://github.com/ghostwriter/event-dispatcher/issues",
@@ -208,7 +237,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-21T19:18:04+00:00"
+            "time": "2025-11-23T22:18:37+00:00"
         },
         {
             "name": "ghostwriter/filesystem",
@@ -337,6 +366,109 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.7.0"
             },
             "time": "2025-12-06T11:56:16+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
+            },
+            "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -550,16 +682,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.9.2",
+            "version": "2.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "8d5358f147c63a3a681b002076deff8c90e0b19d"
+                "reference": "72a8f8e653710e18d83e5dd531eb5a71fc3223e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/8d5358f147c63a3a681b002076deff8c90e0b19d",
-                "reference": "8d5358f147c63a3a681b002076deff8c90e0b19d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/72a8f8e653710e18d83e5dd531eb5a71fc3223e6",
+                "reference": "72a8f8e653710e18d83e5dd531eb5a71fc3223e6",
                 "shasum": ""
             },
             "require": {
@@ -647,7 +779,7 @@
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
                 "security": "https://github.com/composer/composer/security/policy",
-                "source": "https://github.com/composer/composer/tree/2.9.2"
+                "source": "https://github.com/composer/composer/tree/2.9.5"
             },
             "funding": [
                 {
@@ -659,7 +791,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-19T20:57:25+00:00"
+            "time": "2026-01-29T10:40:53+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -1038,52 +1170,76 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "37e10b19a241ffac3d608c033bc6fc56865712e3"
+                "reference": "5a59581fb122db1d8c326626c90fd2b40f0b2f68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/37e10b19a241ffac3d608c033bc6fc56865712e3",
-                "reference": "37e10b19a241ffac3d608c033bc6fc56865712e3",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/5a59581fb122db1d8c326626c90fd2b40f0b2f68",
+                "reference": "5a59581fb122db1d8c326626c90fd2b40f0b2f68",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "~2.9.0",
                 "composer-runtime-api": "~2.2.2",
-                "composer/composer": "^2.9.2",
+                "composer/composer": "^2.9.5",
+                "ext-apcu": "*",
+                "ext-bcmath": "*",
                 "ext-ctype": "*",
                 "ext-curl": "*",
                 "ext-dom": "*",
+                "ext-ds": "*",
+                "ext-event": "*",
+                "ext-exif": "*",
+                "ext-fileinfo": "*",
                 "ext-filter": "*",
                 "ext-gd": "*",
+                "ext-gettext": "*",
                 "ext-hash": "*",
                 "ext-iconv": "*",
+                "ext-igbinary": "*",
                 "ext-intl": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
+                "ext-memcached": "*",
+                "ext-mysqli": "*",
                 "ext-openssl": "*",
+                "ext-pdo": "*",
+                "ext-pdo_mysql": "*",
+                "ext-pdo_pgsql": "*",
+                "ext-pdo_sqlite": "*",
+                "ext-pgsql": "*",
                 "ext-phar": "*",
+                "ext-protobuf": "*",
                 "ext-readline": "*",
+                "ext-redis": "*",
                 "ext-session": "*",
                 "ext-simplexml": "*",
                 "ext-sockets": "*",
                 "ext-sodium": "*",
+                "ext-sqlite3": "*",
                 "ext-tokenizer": "*",
+                "ext-xdebug": "*",
                 "ext-xml": "*",
+                "ext-xmlreader": "*",
                 "ext-xmlwriter": "*",
+                "ext-xsl": "*",
+                "ext-yaml": "*",
+                "ext-zend-opcache": "*",
+                "ext-zip": "*",
                 "ext-zlib": "*",
+                "ghostwriter/config": "^2.0.2",
+                "ghostwriter/console": "^0.1.2",
+                "ghostwriter/github-cli": "^0.1.0",
+                "mockery/mockery": "^1.6.12",
+                "nikic/php-parser": "^5.7.0",
                 "php": "~8.4.0 || ~8.5.0",
-                "symfony/console": "^8.0.0"
+                "phpunit/phpunit": "^12.5.8",
+                "symfony/process": "^8.0.5",
+                "symfony/var-dumper": "^8.0.4"
             },
             "conflict": {
                 "pestphp/pest": "*"
-            },
-            "require-dev": {
-                "ext-xdebug": "*",
-                "mockery/mockery": "^1.6.12",
-                "nikic/php-parser": "^5.6.2",
-                "phpunit/phpunit": "^12.4.4",
-                "symfony/var-dumper": "^8.0.0"
             },
             "default-branch": true,
             "bin": [
@@ -1147,6 +1303,9 @@
                             "zetacomponents",
                             "zf-commons"
                         ]
+                    },
+                    "container": {
+                        "definition": "Ghostwriter\\CodingStandard\\Container\\CodingStandardDefinition"
                     }
                 },
                 "plugin-optional": false,
@@ -1160,7 +1319,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-4-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -1191,7 +1350,311 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-27T10:34:03+00:00"
+            "time": "2026-01-29T17:33:39+00:00"
+        },
+        {
+            "name": "ghostwriter/config",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/config.git",
+                "reference": "27a8517b8b344e9744262357c4cc6246ba9b73f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/config/zipball/27a8517b8b344e9744262357c4cc6246ba9b73f4",
+                "reference": "27a8517b8b344e9744262357c4cc6246ba9b73f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.4.0 || ~8.5.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "ghostwriter/container": "^6.0.1",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.5.3",
+                "symfony/var-dumper": "^8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/config",
+                    "name": "ghostwriter/config"
+                },
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\Config\\Container\\ConfigurationDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-4-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides an object that maps configuration keys to values.",
+            "homepage": "https://github.com/ghostwriter/config",
+            "keywords": [
+                "config",
+                "ghostwriter"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/config/issues",
+                "rss": "https://github.com/ghostwriter/config/releases.atom",
+                "security": "https://github.com/ghostwriter/config/security/advisories/new",
+                "source": "https://github.com/ghostwriter/config"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-14T23:37:43+00:00"
+        },
+        {
+            "name": "ghostwriter/console",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/console.git",
+                "reference": "9d3649ec7d444be5457d06b58de4c7cc097e02e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/console/zipball/9d3649ec7d444be5457d06b58de4c7cc097e02e0",
+                "reference": "9d3649ec7d444be5457d06b58de4c7cc097e02e0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ghostwriter/config": "^2.0.1",
+                "ghostwriter/container": "^6.0.1",
+                "php": "~8.4.0 || ~8.5.0",
+                "symfony/console": "^7.3.6 || ^8.0.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.4.4",
+                "symfony/var-dumper": "^7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/console",
+                    "name": "ghostwriter/console"
+                },
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\Console\\Container\\ConsoleDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\Console\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-4-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "console application skeleton built on top of symfony/console",
+            "homepage": "https://github.com/ghostwriter/console",
+            "keywords": [
+                "console",
+                "ghostwriter"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/console/issues",
+                "rss": "https://github.com/ghostwriter/console/releases.atom",
+                "security": "https://github.com/ghostwriter/console/security/advisories/new",
+                "source": "https://github.com/ghostwriter/console"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-11-27T13:58:10+00:00"
+        },
+        {
+            "name": "ghostwriter/github-cli",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/github-cli.git",
+                "reference": "59ca9f1450c3da4f9956225978f2464ae860a3e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/github-cli/zipball/59ca9f1450c3da4f9956225978f2464ae860a3e8",
+                "reference": "59ca9f1450c3da4f9956225978f2464ae860a3e8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ghostwriter/container": "^6.0.1",
+                "ghostwriter/shell": "^0.1.1",
+                "php": "~8.4.0 || ~8.5.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.5.4",
+                "symfony/var-dumper": "^8.0.3"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/github-cli",
+                    "name": "ghostwriter/github-cli"
+                },
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\GitHubCli\\Container\\GitHubCliDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\GitHubCli\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-4-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP wrapper for GitHub CLI (gh)",
+            "homepage": "https://github.com/ghostwriter/github-cli",
+            "keywords": [
+                "gh",
+                "ghostwriter",
+                "github",
+                "github-cli"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/github-cli/issues",
+                "rss": "https://github.com/ghostwriter/github-cli/releases.atom",
+                "security": "https://github.com/ghostwriter/github-cli/security/advisories/new",
+                "source": "https://github.com/ghostwriter/github-cli"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-01T05:15:43+00:00"
+        },
+        {
+            "name": "ghostwriter/shell",
+            "version": "0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/shell.git",
+                "reference": "52baa393e18d9db93f479c96241d6d644ec07f10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/shell/zipball/52baa393e18d9db93f479c96241d6d644ec07f10",
+                "reference": "52baa393e18d9db93f479c96241d6d644ec07f10",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.4.0 || ~8.5.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "ghostwriter/container": "^6.0.1",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.5.7",
+                "symfony/var-dumper": "^8.0.4"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/shell",
+                    "name": "ghostwriter/shell"
+                },
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\Shell\\Container\\ShellDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\Shell\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Execute commands and external programs",
+            "homepage": "https://github.com/ghostwriter/shell",
+            "keywords": [
+                "ghostwriter",
+                "process",
+                "shell"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/shell/issues",
+                "rss": "https://github.com/ghostwriter/shell/releases.atom",
+                "security": "https://github.com/ghostwriter/shell/security/advisories/new",
+                "source": "https://github.com/ghostwriter/shell"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-25T16:15:33+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -2091,59 +2554,6 @@
                 }
             ],
             "time": "2026-01-27T06:12:29+00:00"
-        },
-        {
-            "name": "psr/container",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "support": {
-                "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/2.0.2"
-            },
-            "time": "2021-11-05T16:47:00+00:00"
         },
         {
             "name": "psr/log",
@@ -4279,20 +4689,20 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.3.3",
+            "version": "v8.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "32241012d521e2e8a9d713adb0812bb773b907f1"
+                "reference": "b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/32241012d521e2e8a9d713adb0812bb773b907f1",
-                "reference": "32241012d521e2e8a9d713adb0812bb773b907f1",
+                "url": "https://api.github.com/repos/symfony/process/zipball/b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674",
+                "reference": "b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2"
+                "php": ">=8.4"
             },
             "type": "library",
             "autoload": {
@@ -4320,7 +4730,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.3.3"
+                "source": "https://github.com/symfony/process/tree/v8.0.5"
             },
             "funding": [
                 {
@@ -4340,7 +4750,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-18T09:42:54+00:00"
+            "time": "2026-01-26T15:08:38+00:00"
         },
         {
             "name": "symfony/service-contracts",
