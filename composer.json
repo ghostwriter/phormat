@@ -43,13 +43,13 @@
         "ghostwriter/event-dispatcher": "^6.0.2",
         "ghostwriter/filesystem": "^0.1.2",
         "nikic/php-parser": "^5.7.0",
-        "sebastian/diff": "^7.0.0"
+        "sebastian/diff": "^8.0.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
         "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^12.5.9",
+        "phpunit/phpunit": "^13.0.1",
         "symfony/var-dumper": "^8.0.4"
     },
     "prefer-stable": true,
