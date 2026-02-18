@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4c5262c81d6e4711d7ee7f7422023e5",
+    "content-hash": "5e617e04f116052b70e77b21bfc7fce8",
     "packages": [
         {
             "name": "ghostwriter/case-converter",
@@ -2251,16 +2251,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "13.0.3",
+            "version": "13.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a9c20642ffd2098c0f9e687c00849afbce2f23c7"
+                "reference": "915a2e7266f04c1867b2dc812abc86c34f1aa52f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a9c20642ffd2098c0f9e687c00849afbce2f23c7",
-                "reference": "a9c20642ffd2098c0f9e687c00849afbce2f23c7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/915a2e7266f04c1867b2dc812abc86c34f1aa52f",
+                "reference": "915a2e7266f04c1867b2dc812abc86c34f1aa52f",
                 "shasum": ""
             },
             "require": {
@@ -2329,7 +2329,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.0.3"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.0.4"
             },
             "funding": [
                 {
@@ -2353,7 +2353,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-16T08:38:33+00:00"
+            "time": "2026-02-18T09:00:54+00:00"
         },
         {
             "name": "psr/clock",
