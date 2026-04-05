@@ -43,7 +43,7 @@
         "ghostwriter/event-dispatcher": "^6.0.2",
         "ghostwriter/filesystem": "^0.1.2",
         "nikic/php-parser": "^5.7.0",
-        "sebastian/diff": "^8.0.0"
+        "sebastian/diff": "^8.1.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
