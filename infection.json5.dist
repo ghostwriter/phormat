@@ -1,11 +1,5 @@
 {
-<<<<<<< Updated upstream
     "$schema": "https://raw.githubusercontent.com/infection/infection/0.32.6/resources/schema.json",
-||||||| Stash base
-    "$schema": "https://raw.githubusercontent.com/infection/infection/0.29.14/resources/schema.json",
-=======
-    "$schema": "https://raw.githubusercontent.com/infection/infection/0.30.3/resources/schema.json",
->>>>>>> Stashed changes
     "source": {
         "directories": [
             "src"
