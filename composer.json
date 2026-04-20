@@ -34,8 +34,8 @@
         "php": "~8.4.0 || ~8.5.0",
         "ext-mbstring": "*",
         "ghostwriter/case-converter": "^2.2.1",
-        "ghostwriter/container": "^6.1.1",
-        "ghostwriter/event-dispatcher": "^6.1.0",
+        "ghostwriter/container": "^7.0.0",
+        "ghostwriter/event-dispatcher": "^6.1.1",
         "ghostwriter/filesystem": "^0.2.0",
         "nikic/php-parser": "^5.7.0",
         "sebastian/diff": "^8.1.0"
