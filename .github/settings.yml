@@ -1,14 +1,18 @@
 "milestones":
-  - "title": "0.1.0"
-    "description": "Minor release – targeting 0.1.x branch (semantic version: 0.1.0)"
-    "state": "open"
   - "title": "1.0.0"
     "description": "Major release – targeting 1.0.x branch (semantic version: 1.0.0)"
+    "state": "open"
+  - "title": "0.1.0"
+    "description": "Minor release – targeting 0.1.x branch (semantic version: 0.1.0)"
     "state": "open"
 "repository":
   "name": "phormat"
   "description": "[WIP] PHP code formatter"
-  "topics": "coding-standard, dev, ghostwriter, phormat"
+  "topics":
+    - "ghostwriter"
+    - "phormat"
+    - "php"
+    - "dev"
   "homepage": "https://github.com/ghostwriter/phormat"
   "default_branch": "0.1.x"
   "allow_auto_merge": true
