@@ -8,11 +8,6 @@
 "repository":
   "name": "phormat"
   "description": "[WIP] PHP code formatter"
-  "topics":
-    - "ghostwriter"
-    - "phormat"
-    - "php"
-    - "dev"
   "homepage": "https://github.com/ghostwriter/phormat"
   "default_branch": "0.1.x"
   "allow_auto_merge": true
